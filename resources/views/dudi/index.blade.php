@@ -37,6 +37,7 @@
                                     <th>NIP Pimpinan</th>
                                     <th>Kota</th>
                                     <th>No. HP</th>
+                                    <th>Jurusan</th>
                                     <th>Action</th>
                                 </tr>
                             </thead>
@@ -51,16 +52,25 @@
                                         <td>{{ $item->nip ?? '' }}</td>
                                         <td>{{ $item->kota ?? '' }}</td>
                                         <td>{{ $item->no_hp ?? '' }}</td>
-                                        <td class="d-flex">
-                                            <a href="{{ route('dudi.edit', $item->id) }}" class="btn btn-sm btn-warning"><i
-                                                    class="bi bi-pencil text-white"></i></a>
-                                            <form action="{{ route('dudi.destroy', $item->id) }}" method="POST">
-                                                @csrf
-                                                @method('DELETE')
-                                                <button type="submit" class="btn btn-sm btn-danger ms-2"
-                                                    onclick="return confirm('Yakin ingin menghapus data?')"><i
-                                                        class="bi bi-trash"></i></button>
-                                            </form>
+                                        <td class="text-wrap">
+                                            @if (empty($item->majors()))
+                                                {{ '-' }}
+                                            @else
+                                                {{ implode(', ' ,$item->majors()->pluck('nama')->toArray()) }}
+                                            @endif
+                                        </td>
+                                        <td>
+                                            <div class="d-flex">
+                                                <a href="{{ route('dudi.edit', $item->id) }}" class="btn btn-sm btn-warning"><i
+                                                        class="bi bi-pencil text-white"></i></a>
+                                                <form action="{{ route('dudi.destroy', $item->id) }}" method="POST">
+                                                    @csrf
+                                                    @method('DELETE')
+                                                    <button type="submit" class="btn btn-sm btn-danger ms-2"
+                                                        onclick="return confirm('Yakin ingin menghapus data?')"><i
+                                                            class="bi bi-trash"></i></button>
+                                                </form>
+                                            </div>
                                         </td>
                                     </tr>
                                 @endforeach

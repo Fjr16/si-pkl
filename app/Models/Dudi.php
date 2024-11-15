@@ -22,4 +22,8 @@ class Dudi extends Model
     {
         return $this->belongsTo(User::class);
     }
+    public function majors()
+    {
+        return $this->belongsToMany(Major::class);
+    }
 }

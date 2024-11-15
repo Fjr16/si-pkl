@@ -33,8 +33,10 @@
                                     <th>Username</th>
                                     <th>Email</th>
                                     <th>Nama</th>
+                                    <th>NIS</th>
                                     <th>JK</th>
                                     <th>No. HP</th>
+                                    <th>Jurusan</th>
                                     <th>Action</th>
                                 </tr>
                             </thead>
@@ -45,8 +47,10 @@
                                         <td>{{ $item->user->username ?? '' }}</td>
                                         <td>{{ $item->user->email ?? '' }}</td>
                                         <td>{{ $item->user->name ?? '' }}</td>
+                                        <td>{{ $item->nis ?? '' }}</td>
                                         <td>{{ $item->jk ?? '' }}</td>
                                         <td>{{ $item->no_hp ?? '' }}</td>
+                                        <td>{{ $item->major->nama ?? '' }}</td>
                                         <td class="d-flex">
                                             <a href="{{ route('siswa.edit', $item->id) }}"
                                                 class="btn btn-sm btn-warning"><i class="bi bi-pencil text-white"></i></a>

@@ -28,7 +28,7 @@
                             <div class="row mb-3">
                                 <label for="inputUsername" class="col-sm-2 col-form-label">Username</label>
                                 <div class="col-sm-10">
-                                    <input type="number" class="form-control" name="username"
+                                    <input type="text" class="form-control" name="username"
                                         value="{{ $dudi->user->username ?? '' }}" required>
                                 </div>
                             </div>
@@ -80,12 +80,25 @@
                                         value="{{ $dudi->no_hp ?? '' }}" required>
                                 </div>
                             </div>
-                            <div class="row mb-3">
+                            <div class="row pb-2 mb-0 border-bottom">
                                 <label for="inputPassword" class="col-sm-2 col-form-label">Password</label>
                                 <div class="col-sm-10">
                                     <input type="password" name="password" class="form-control">
                                 </div>
                             </div>
+
+                             {{--  --}}
+                             <h5 class="card-title"> Jurusan Yang Diterima</h5>
+                             <div class="row mb-3 border-bottom pb-2">
+                                 @foreach ($data as $item)
+                                 <div class="col-md-4">
+                                     <div class="form-check form-check-inline">
+                                       <input class="form-check-input" type="checkbox" id="jurusan_{{ $loop->iteration }}" value="{{ $item->id }}" name="major_id[]" {{ in_array($item->id, $dudi->majors()->pluck('major_id')->toArray()) ? 'checked' : '' }}/>
+                                       <label class="form-check-label" for="jurusan_{{ $loop->iteration }}">{{ $item->nama ?? '-' }}</label>
+                                     </div>
+                                 </div>
+                                 @endforeach
+                             </div>
 
                             <div class="row mb-3">
                                 <label class="col-sm-2 col-form-label"></label>

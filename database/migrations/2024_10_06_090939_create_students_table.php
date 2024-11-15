@@ -15,6 +15,7 @@ return new class extends Migration
             $table->id();
             $table->foreignId('user_id');
             $table->foreignId('major_id');
+            $table->string('nis', 20);
             $table->string('jk');
             $table->string('tmp_lhr');
             $table->string('tgl_lhr');

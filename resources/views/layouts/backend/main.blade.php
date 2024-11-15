@@ -55,6 +55,13 @@
 
     <main id="main" class="main">
 
+        {{-- alert --}}
+        @if (session()->has('error'))
+            <div class="alert alert-danger" role="alert">
+                {{ session('error') }}
+            </div>
+        @endif
+
         <!-- Content -->
         @yield('content')
         <!-- End Content -->
@@ -85,6 +92,16 @@
     <script src="https://code.jquery.com/jquery-3.7.1.min.js"
         integrity="sha256-/JqT3SQfawRcv/BIHPThkBvs0OEvtFFmqPF/lYI/Cxo=" crossorigin="anonymous"></script>
     <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
+
+        {{-- alert autoclose --}}
+        <script>
+            $(document).ready(function(){
+                setTimeout(function() {
+                    $('.alert').fadeOut(500); // Sembunyikan alert setelah 500ms
+                }, 5000);
+            });
+        </script>
+
     @stack('scripts')
 
     <!-- Select 2 -->

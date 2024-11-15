@@ -28,7 +28,7 @@
                             <div class="row mb-3">
                                 <label for="inputUsername" class="col-sm-2 col-form-label">Username</label>
                                 <div class="col-sm-10">
-                                    <input type="number" class="form-control" name="username"
+                                    <input type="text" class="form-control" name="username"
                                         value="{{ $siswa->user->username ?? '' }}" required>
                                 </div>
                             </div>
@@ -44,6 +44,12 @@
                                 <div class="col-sm-10">
                                     <input type="text" class="form-control" name="nama"
                                         value="{{ $siswa->user->name ?? '' }}" required>
+                                </div>
+                            </div>
+                            <div class="row mb-3">
+                                <label for="nis" class="col-sm-2 col-form-label">NIS</label>
+                                <div class="col-sm-10">
+                                    <input type="number" class="form-control" name="nis" value="{{ $siswa->nis ?? '' }}" required>
                                 </div>
                             </div>
                             <div class="row mb-3">

@@ -43,6 +43,7 @@ class StudentController extends Controller
         Student::create([
             'major_id' => $request->input('major_id'),
             'user_id' => $user->id,
+            'nis' => $request->input('nis'),
             'jk' => $request->input('jk'),
             'tmp_lhr' => $request->input('tmp_lhr'),
             'tgl_lhr' => $request->input('tgl_lhr'),
@@ -72,6 +73,7 @@ class StudentController extends Controller
         $siswa->update([
             'major_id' => $request->input('major_id'),
             'jk' => $request->input('jk'),
+            'nis' => $request->input('nis'),
             'tmp_lhr' => $request->input('tmp_lhr'),
             'tgl_lhr' => $request->input('tgl_lhr'),
             'alamat' => $request->input('alamat'),

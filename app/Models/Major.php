@@ -18,4 +18,8 @@ class Major extends Model
     {
         return $this->hasMany(Student::class);
     }
+
+    public function dudis(){
+        return $this->belongsToMany(Dudi::class);
+    }
 }

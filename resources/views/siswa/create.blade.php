@@ -6,7 +6,7 @@
             <nav>
                 <ol class="breadcrumb">
                     <li class="breadcrumb-item"><a href="{{ route('dashboard') }}">Home</a></li>
-                    <li class="breadcrumb-item active">Data Guru</li>
+                    <li class="breadcrumb-item active">Data Siswa</li>
                 </ol>
             </nav>
         </div>
@@ -27,7 +27,7 @@
                             <div class="row mb-3">
                                 <label for="inputUsername" class="col-sm-2 col-form-label">Username</label>
                                 <div class="col-sm-10">
-                                    <input type="number" class="form-control" name="username" required>
+                                    <input type="text" class="form-control" name="username" required>
                                 </div>
                             </div>
                             <div class="row mb-3">
@@ -40,6 +40,12 @@
                                 <label for="inputNama" class="col-sm-2 col-form-label">Nama</label>
                                 <div class="col-sm-10">
                                     <input type="text" class="form-control" name="nama" required>
+                                </div>
+                            </div>
+                            <div class="row mb-3">
+                                <label for="nis" class="col-sm-2 col-form-label">NIS</label>
+                                <div class="col-sm-10">
+                                    <input type="number" class="form-control" name="nis" required>
                                 </div>
                             </div>
                             <div class="row mb-3">
