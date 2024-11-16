@@ -26,4 +26,8 @@ class Dudi extends Model
     {
         return $this->belongsToMany(Major::class);
     }
+    public function pklDatas()
+    {
+        return $this->hasMany(PklData::class);
+    }
 }

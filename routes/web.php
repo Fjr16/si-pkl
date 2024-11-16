@@ -107,6 +107,7 @@ Route::middleware('auth')->group(function () {
     Route::get('data/pkl/siswa/edit/{id}', [PklController::class, 'edit'])->name('data/pkl/siswa.edit');
     Route::put('data/pkl/siswa/update/{id}', [PklController::class, 'update'])->name('data/pkl/siswa.update');
     Route::delete('data/pkl/siswa/destroy/{id}', [PklController::class, 'destroy'])->name('data/pkl/siswa.destroy');
+    Route::get('get/data/dudi/{id}', [PklController::class, 'getDataDudi'])->name('get/data.dudi');
     
     // Sertifikat
     Route::get('sertifikat', [SertifikatController::class, 'index'])->name('sertifikat.index');

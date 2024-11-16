@@ -20,7 +20,7 @@
                     <div class="card-body">
                         <div class="d-flex align-items-center">
                             <h5 class="card-title">{{ $title ?? '' }}</h5>
-                            @if (Auth::user()->role == 'Siswa')
+                            @if (Auth::user()->role == 'Admin')
                                 <a href="{{ route('data/pkl/siswa.create') }}" class="btn btn-sm btn-primary ms-auto"><i
                                         class="bi bi-plus-lg"></i> Tambah Data</a>
                             @endif
@@ -35,23 +35,22 @@
                                     <th>Jenis Kelamin</th>
                                     <th>Nama Perusahaan</th>
                                     <th>Nama Pembimbing</th>
-                                    {{-- <th>Alamat</th> --}}
                                     <th>Action</th>
                                 </tr>
                             </thead>
                             <tbody>
-                                {{-- @foreach ($data as $item)
+                                @foreach ($data as $item)
                                     <tr>
                                         <td>{{ $loop->iteration }}</td>
-                                        <td>{{ $item->user->username ?? '' }}</td>
-                                        <td>{{ $item->user->email ?? '' }}</td>
-                                        <td>{{ $item->user->name ?? '' }}</td>
-                                        <td>{{ $item->jk ?? '' }}</td>
-                                        <td>{{ $item->no_hp ?? '' }}</td>
+                                        <td>{{ $item->student->user->name ?? '-' }}</td>
+                                        <td>{{ $item->student->major->nama ?? '-' }}</td>
+                                        <td>{{ $item->student->jk ?? '-' }}</td>
+                                        <td>{{ $item->dudi->user->name ?? '-' }}</td>
+                                        <td>{{ $item->teacher->user->name ?? '-' }}</td>
                                         <td class="d-flex">
-                                            <a href="{{ route('siswa.edit', $item->id) }}"
+                                            <a href="{{ route('data/pkl/siswa.edit', $item->id) }}"
                                                 class="btn btn-sm btn-warning"><i class="bi bi-pencil text-white"></i></a>
-                                            <form action="{{ route('siswa.destroy', $item->id) }}" method="POST">
+                                            <form action="{{ route('data/pkl/siswa.destroy', $item->id) }}" method="POST">
                                                 @csrf
                                                 @method('DELETE')
                                                 <button type="submit" class="btn btn-sm btn-danger ms-2"
@@ -60,7 +59,7 @@
                                             </form>
                                         </td>
                                     </tr>
-                                @endforeach --}}
+                                @endforeach
                             </tbody>
                         </table>
 

@@ -29,4 +29,8 @@ class Student extends Model
     {
         return $this->belongsTo(Major::class);
     }
+    public function pklDatas()
+    {
+        return $this->hasMany(PklData::class);
+    }
 }

@@ -22,91 +22,55 @@
                             <h5 class="card-title">{{ $title ?? '' }}</h5>
                         </div>
 
-                        <form method="POST" action="{{ route('siswa.update', $siswa->id) }}" enctype="multipart/form-data">
+                        <form method="POST" action="{{ route('data/pkl/siswa.update', $item->id) }}">
                             @csrf
                             @method('PUT')
                             <div class="row mb-3">
-                                <label for="inputUsername" class="col-sm-2 col-form-label">Username</label>
+                                <label for="student_id" class="col-sm-2 col-form-label">Nama Siswa</label>
                                 <div class="col-sm-10">
-                                    <input type="number" class="form-control" name="username"
-                                        value="{{ $siswa->user->username ?? '' }}" required>
-                                </div>
-                            </div>
-                            <div class="row mb-3">
-                                <label for="inputEmail" class="col-sm-2 col-form-label">Email</label>
-                                <div class="col-sm-10">
-                                    <input type="email" class="form-control" name="email"
-                                        value="{{ $siswa->user->email ?? '' }}" required>
-                                </div>
-                            </div>
-                            <div class="row mb-3">
-                                <label for="inputNama" class="col-sm-2 col-form-label">Nama</label>
-                                <div class="col-sm-10">
-                                    <input type="text" class="form-control" name="nama"
-                                        value="{{ $siswa->user->name ?? '' }}" required>
-                                </div>
-                            </div>
-                            <div class="row mb-3">
-                                <label for="inputJK" class="col-sm-2 col-form-label">Jenis Kelamin</label>
-                                <div class="col-sm-10">
-                                    <select class="form-select" name="jk" aria-label="Default select example" required>
-                                        <option selected disabled value="">Pilih Jenis Kelamin</option>
-                                        <option value="Laki-Laki"{{ $siswa->jk == 'Laki-Laki' ? 'selected' : '' }}>Laki-Laki
-                                        </option>
-                                        <option value="Perempuan"{{ $siswa->jk == 'Perempuan' ? 'selected' : '' }}>Perempuan
-                                        </option>
-                                    </select>
-                                </div>
-                            </div>
-                            <div class="row mb-3">
-                                <label for="inputTempatLahir" class="col-sm-2 col-form-label">Tempat Lahir</label>
-                                <div class="col-sm-10">
-                                    <input type="text" class="form-control" name="tmp_lhr"
-                                        value="{{ $siswa->tmp_lhr ?? '' }}" required>
-                                </div>
-                            </div>
-                            <div class="row mb-3">
-                                <label for="inputTanggalLahir" class="col-sm-2 col-form-label">Tanggal Lahir</label>
-                                <div class="col-sm-10">
-                                    <input type="date" class="form-control" name="tgl_lhr"
-                                        value="{{ $siswa->tgl_lhr ?? '' }}" required>
-                                </div>
-                            </div>
-                            <div class="row mb-3">
-                                <label for="inputAlamat" class="col-sm-2 col-form-label">Alamat</label>
-                                <div class="col-sm-10">
-                                    <textarea name="alamat" class="form-control" required>{{ $siswa->alamat ?? '' }}</textarea>
-                                </div>
-                            </div>
-                            <div class="row mb-3">
-                                <label for="inputNoHP" class="col-sm-2 col-form-label">No. HP</label>
-                                <div class="col-sm-10">
-                                    <input type="number" name="no_hp" class="form-control"
-                                        value="{{ $siswa->no_hp ?? '' }}" required>
-                                </div>
-                            </div>
-                            <div class="row mb-3">
-                                <label for="inputJurusan" class="col-sm-2 col-form-label">Jurusan</label>
-                                <div class="col-sm-10">
-                                    <select class="form-select" name="major_id" aria-label="Default select example"
-                                        required>
-                                        <option selected disabled value="">Pilih Jurusan</option>
-                                        @foreach ($majors as $major)
-                                            <option
-                                                value="{{ $major->id }}"{{ $siswa->major_id == $major->id ? 'selected' : '' }}>
-                                                {{ $major->kode ?? '' }} | {{ $major->nama ?? '' }}
-                                            </option>
+                                    <select name="student_id" id="student_id" class="form-select" required>
+                                        <option selected disabled>Pilih Siswa</option>
+                                        @foreach ($data as $siswa)
+                                            <option value="{{ $siswa->id }}" {{ old('student_id', $item->student_id == $siswa->id) ? 'selected' : '' }}>{{ $siswa->user->name ?? '-' }}</option>
                                         @endforeach
                                     </select>
                                 </div>
                             </div>
                             <div class="row mb-3">
-                                <label for="inputPassword" class="col-sm-2 col-form-label">Password</label>
+                                <label for="jurusan" class="col-sm-2 col-form-label">Jurusan</label>
                                 <div class="col-sm-10">
-                                    <input type="password" name="password" class="form-control">
+                                    <input type="text" class="form-control" name="jurusan" id="jurusan" value="{{ $item->student->major->nama ?? '-' }}" placeholder="Jurusan" @disabled(true)>
                                 </div>
                             </div>
-
+                            <div class="row mb-3">
+                                <label for="jenis-kelamin" class="col-sm-2 col-form-label">Jenis Kelamin</label>
+                                <div class="col-sm-10">
+                                    <input type="text" class="form-control" name="jenis_kelamin" id="jenis_kelamin" value="{{ $item->student->jk ?? '-' }}" placeholder="Jenis Kelamin" @disabled(true)>
+                                </div>
+                            </div>
+                            <div class="row mb-3">
+                                <label for="dudi_id" class="col-sm-2 col-form-label">Nama Perusahaan</label>
+                                <div class="col-sm-10">
+                                    <select name="dudi_id" id="dudi_id" class="form-select" required>
+                                        <option selected disabled>Pilih Perusahaan</option>
+                                        @foreach ($dataDudis as $dudi)
+                                            <option value="{{ $dudi->id }}" {{ $dudi->id == $item->dudi_id ? 'selected' : '' }}>{{ $dudi->user->name ?? '-' }}</option>
+                                        @endforeach
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="row mb-3">
+                                <label for="teacher_id" class="col-sm-2 col-form-label">Nama Pembimbing</label>
+                                <div class="col-sm-10">
+                                    <select name="teacher_id" id="teacher_id" class="form-select" required>
+                                        <option selected disabled>Pilih Pembimbing</option>
+                                        @foreach ($teachers as $teacher)
+                                            <option value="{{ $teacher->id }}" {{ $teacher->id == $item->teacher_id ? 'selected' : '' }}>{{ $teacher->user->name ?? '-' }}</option>
+                                        @endforeach
+                                    </select>
+                                </div>
+                            </div>
+                            
                             <div class="row mb-3">
                                 <label class="col-sm-2 col-form-label"></label>
                                 <div class="col-sm-10">
@@ -123,3 +87,73 @@
         </div>
     </section>
 @endsection
+
+@push('scripts')
+    <script>
+
+        async function fetchDataDudis(major_id){
+            const url = "{{ route('get/data.dudi', ':id') }}".replace(':id', major_id);
+
+            try {
+                const response = await fetch(url, {
+                    method : 'GET',
+                });
+
+                if (!response.ok) {
+                    const errorData = await response.json();
+                    throw new Error(errorData.message || 'something went wrong');
+                }
+
+                const result = await response.json();
+                return result.data;
+            } catch (error) {
+                console.log('Error', error.message);
+                return null;
+            }
+        }
+
+        const students = @json($data);
+        document.getElementById('student_id').addEventListener('change', async function() {
+            const majorInput = document.getElementById('jurusan');
+            const jkInput = document.getElementById('jenis_kelamin');
+            const dudiSelect = document.getElementById('dudi_id');
+
+            // set value to null
+            majorInput.value = null;
+            jkInput.value = null;
+
+            const selectedStudentId = parseInt(this.value);
+            const itemSelectedStudent = students.find(function(item){
+                return item.id === selectedStudentId;
+            });
+
+            if (itemSelectedStudent) {
+                majorInput.value = itemSelectedStudent.major.nama; 
+                jkInput.value = itemSelectedStudent.jk; 
+            }else{
+                alert('Tidak Ditemukan Data Siswa Yang Sesuai Pilihan Anda');
+            }
+            if (itemSelectedStudent.major_id) {
+                const res = await fetchDataDudis(itemSelectedStudent.major_id);
+                if (res) {
+                    dataDudiToFormSelect(res, dudiSelect);
+                    // console.log(res);
+                }else{
+                    alert('Terjadi Kesalahan Atau Data Tidak Ditemukan');
+                }
+            }else{
+                alert('Data Jurusan Siswa Tidak Ditemukan, Mohon Lengkapi Data');
+            }
+        });
+
+
+        function dataDudiToFormSelect(data, element) {
+            let dudis = `<option selected disabled>Pilih Perusahaan</option>`;
+            data.forEach(item => {
+                dudis += `<option value="${item.id}">${item.user.name ?? '-'}</option>`;
+            });
+            element.innerHTML = dudis;
+            element.disabled = false;
+        }
+    </script>
+@endpush

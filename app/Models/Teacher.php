@@ -27,4 +27,8 @@ class Teacher extends Model
     {
         return $this->belongsTo(User::class);
     }
+    public function pklDatas()
+    {
+        return $this->hasMany(PklData::class);
+    }
 }
