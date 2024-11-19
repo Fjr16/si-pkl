@@ -37,4 +37,8 @@ class Student extends Model
     {
         return $this->hasMany(AttendanceList::class);
     }
+    public function lastReport()
+    {
+        return $this->hasOne(LastReport::class);
+    }
 }

@@ -90,7 +90,9 @@ Route::middleware('auth')->group(function () {
 
     // Laporan Akhir
     Route::get('laporan/akhir', [LaporanAkhirController::class, 'index'])->name('laporan/akhir.index');
+    Route::get('laporan/akhir/create', [LaporanAkhirController::class, 'create'])->name('laporan/akhir.create');
     Route::post('laporan/akhir/store', [LaporanAkhirController::class, 'store'])->name('laporan/akhir.store');
+    Route::get('laporan/akhir/download/{id}', [LaporanAkhirController::class, 'download'])->name('laporan/akhir.download');
 
     // Monitoring guru
     Route::get('monitoring/guru', [MonitoringController::class, 'index'])->name('monitoring/guru.index');

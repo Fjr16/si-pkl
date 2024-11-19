@@ -84,7 +84,7 @@
         </li>
 
         <li class="nav-item">
-            <a class="nav-link {{ Request::is('laporan/akhir*') ? '' : 'collapsed' }}" href="{{ route('laporan/akhir.index') }}">
+            <a class="nav-link {{ Request::is('laporan/akhir*') ? '' : 'collapsed' }}" href="{{ route('laporan/akhir.create') }}">
                 <i class="bi bi-journals"></i>
                 <span>Laporan Akhir</span>
             </a>
