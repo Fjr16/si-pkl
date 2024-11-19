@@ -11,6 +11,18 @@ use Illuminate\Http\Request;
 
 class PklController extends Controller
 {
+    private function checkStudentAlreadyHasPkl($student_id, $old_id) {
+        if ($old_id) {
+            $data = PklData::where('student_id', $student_id)->whereNot('id', $old_id)->first();
+        }else{
+            $data = PklData::where('student_id', $student_id)->first();
+        }
+        if ($data) {
+            return true;
+        }
+        return false;
+    }
+
     /**
      * Display a listing of the resource.
      */
@@ -28,7 +40,7 @@ class PklController extends Controller
      */
     public function create()
     {
-        $data = Student::with('major')->get();
+        $data = Student::with('major')->whereDoesntHave('pklData')->get();
         $teachers = Teacher::all();
         return view('data-pkl.create', [
             'title' => 'Data PKL Siswa',
@@ -47,6 +59,12 @@ class PklController extends Controller
             'dudi_id' => 'required|exists:dudis,id',
             'teacher_id' => 'required|exists:teachers,id',
         ]);
+
+        $checkDuplicateStudent = $this->checkStudentAlreadyHasPkl($data['student_id'], null);
+
+        if ($checkDuplicateStudent) {
+            return back()->with('error', 'Gagal !! Data Pkl Siswa Telah Ada, Setiap Siswa hanya bisa memiliki satu data PKL');
+        }
 
         PklData::create($data);
 
@@ -93,6 +111,12 @@ class PklController extends Controller
             'dudi_id' => 'required|exists:dudis,id',
             'teacher_id' => 'required|exists:teachers,id',
         ]);
+
+        $checkDuplicateStudent = $this->checkStudentAlreadyHasPkl($data['student_id'], $item->id);
+
+        if ($checkDuplicateStudent) {
+            return back()->with('error', 'Gagal !! Data Pkl Siswa Telah Ada, Setiap Siswa hanya bisa memiliki satu data PKL');
+        }
 
         $item->update($data);
 
