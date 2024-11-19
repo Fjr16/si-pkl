@@ -27,34 +27,31 @@
                             <div class="row mb-3">
                                 <label for="teacher_id" class="col-sm-2 col-form-label">Nama Guru</label>
                                 <div class="col-sm-10">
-                                    <select name="teacher_id" id="teacher_id" class="form-select">
-                                        <option value="1">Guru 1</option>
-                                        <option value="2">Guru 2</option>
-                                    </select>
+                                    <input type="hidden" name="teacher_id" id="teacher_id" value="{{ auth()->user()->teacher->id ?? '-' }}">
+                                    <input type="text" class="form-control" value="{{ auth()->user()->name ?? '-' }}" disabled>
                                 </div>
                             </div>
                             <div class="row mb-3">
                                 <label for="student_id" class="col-sm-2 col-form-label">Nama Siswa</label>
                                 <div class="col-sm-10">
                                     <select name="student_id" id="student_id" class="form-select">
-                                        <option value="1">siswa 1</option>
-                                        <option value="2">siswa 2</option>
+                                        <option selected disabled>Pilih Siswa</option>
+                                        @foreach ($data as $item)
+                                            <option value="{{ $item->id }}">{{ $item->user->name ?? '-' }}</option>
+                                        @endforeach
                                     </select>
                                 </div>
                             </div>
                             <div class="row mb-3">
                                 <label for="jurusan" class="col-sm-2 col-form-label">Jurusan</label>
                                 <div class="col-sm-10">
-                                    <input type="text" class="form-control" value="TKJ" disabled>
+                                    <input type="text" class="form-control" id="jurusan" value="" placeholder="Jurusan" disabled>
                                 </div>
                             </div>
                             <div class="row mb-3">
-                                <label for="dudi_id" class="col-sm-2 col-form-label">Nama Perusahaan</label>
+                                <label for="dudi_name" class="col-sm-2 col-form-label">Nama Perusahaan</label>
                                 <div class="col-sm-10">
-                                    <select name="dudi_id" id="dudi_id" class="form-select">
-                                        <option value="1">Perusahaan 1</option>
-                                        <option value="2">Perusahaan 2</option>
-                                    </select>
+                                    <input type="text" class="form-control" id="dudi_name" value="" placeholder="Nama Perusahaan" disabled>
                                 </div>
                             </div>
                             <div class="row mb-3">
@@ -72,7 +69,7 @@
                             <div class="row mb-3">
                                 <label for="tindakan" class="col-sm-2 col-form-label">Tindakan</label>
                                 <div class="col-sm-10">
-                                    <input type="text" class="form-control" name="tindakan" required>
+                                    <input type="text" class="form-control" name="tindakan">
                                 </div>
                             </div>
                             <div class="row mb-3">
@@ -98,3 +95,51 @@
         </div>
     </section>
 @endsection
+
+@push('scripts')
+    <script>
+
+        async function fetchDataDudis(student_id){
+            const url = "{{ route('monitoring/get/pkl.data', ':id') }}".replace(':id', student_id);
+
+            try {
+                const response = await fetch(url, {
+                    method : 'GET',
+                });
+
+                if (!response.ok) {
+                    const errorData = await response.json();
+                    throw new Error(errorData.message || 'something went wrong');
+                }
+
+                const result = await response.json();
+                return result.data;
+            } catch (error) {
+                console.log('Error', error.message);
+                return null;
+            }
+        }
+
+        document.getElementById('student_id').addEventListener('change', async function() {
+            const majorInput = document.getElementById('jurusan');
+            const dudiInput = document.getElementById('dudi_name');
+            const student_id = this.value;
+
+            // set value to null
+            majorInput.value = null;
+            dudiInput.value = null;
+            if (student_id) {
+                const res = await fetchDataDudis(student_id);
+                if (res) {
+                    majorInput.value = res.jurusan;
+                    dudiInput.value = res.nama_perusahaan;
+                    console.log(res);
+                }else{
+                    alert('Terjadi Kesalahan Atau Data PKL Tidak Ditemukan');
+                }
+            }else{
+                alert('Mohon Pilih Siswa terlebih dahulu');
+            }
+        });
+    </script>
+@endpush

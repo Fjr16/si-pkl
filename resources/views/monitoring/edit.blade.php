@@ -22,88 +22,66 @@
                             <h5 class="card-title">{{ $title ?? '' }}</h5>
                         </div>
 
-                        <form method="POST" action="{{ route('siswa.update', $siswa->id) }}" enctype="multipart/form-data">
+                        <form method="POST" action="{{ route('monitoring/guru.update', $item->id) }}" enctype="multipart/form-data">
                             @csrf
                             @method('PUT')
                             <div class="row mb-3">
-                                <label for="inputUsername" class="col-sm-2 col-form-label">Username</label>
+                                <label for="teacher_id" class="col-sm-2 col-form-label">Nama Guru</label>
                                 <div class="col-sm-10">
-                                    <input type="number" class="form-control" name="username"
-                                        value="{{ $siswa->user->username ?? '' }}" required>
+                                    <input type="text" class="form-control" value="{{ $item->teacher->user->name ?? auth()->user()->name }}" disabled>
                                 </div>
                             </div>
                             <div class="row mb-3">
-                                <label for="inputEmail" class="col-sm-2 col-form-label">Email</label>
+                                <label for="student_id" class="col-sm-2 col-form-label">Nama Siswa</label>
                                 <div class="col-sm-10">
-                                    <input type="email" class="form-control" name="email"
-                                        value="{{ $siswa->user->email ?? '' }}" required>
-                                </div>
-                            </div>
-                            <div class="row mb-3">
-                                <label for="inputNama" class="col-sm-2 col-form-label">Nama</label>
-                                <div class="col-sm-10">
-                                    <input type="text" class="form-control" name="nama"
-                                        value="{{ $siswa->user->name ?? '' }}" required>
-                                </div>
-                            </div>
-                            <div class="row mb-3">
-                                <label for="inputJK" class="col-sm-2 col-form-label">Jenis Kelamin</label>
-                                <div class="col-sm-10">
-                                    <select class="form-select" name="jk" aria-label="Default select example" required>
-                                        <option selected disabled value="">Pilih Jenis Kelamin</option>
-                                        <option value="Laki-Laki"{{ $siswa->jk == 'Laki-Laki' ? 'selected' : '' }}>Laki-Laki
-                                        </option>
-                                        <option value="Perempuan"{{ $siswa->jk == 'Perempuan' ? 'selected' : '' }}>Perempuan
-                                        </option>
-                                    </select>
-                                </div>
-                            </div>
-                            <div class="row mb-3">
-                                <label for="inputTempatLahir" class="col-sm-2 col-form-label">Tempat Lahir</label>
-                                <div class="col-sm-10">
-                                    <input type="text" class="form-control" name="tmp_lhr"
-                                        value="{{ $siswa->tmp_lhr ?? '' }}" required>
-                                </div>
-                            </div>
-                            <div class="row mb-3">
-                                <label for="inputTanggalLahir" class="col-sm-2 col-form-label">Tanggal Lahir</label>
-                                <div class="col-sm-10">
-                                    <input type="date" class="form-control" name="tgl_lhr"
-                                        value="{{ $siswa->tgl_lhr ?? '' }}" required>
-                                </div>
-                            </div>
-                            <div class="row mb-3">
-                                <label for="inputAlamat" class="col-sm-2 col-form-label">Alamat</label>
-                                <div class="col-sm-10">
-                                    <textarea name="alamat" class="form-control" required>{{ $siswa->alamat ?? '' }}</textarea>
-                                </div>
-                            </div>
-                            <div class="row mb-3">
-                                <label for="inputNoHP" class="col-sm-2 col-form-label">No. HP</label>
-                                <div class="col-sm-10">
-                                    <input type="number" name="no_hp" class="form-control"
-                                        value="{{ $siswa->no_hp ?? '' }}" required>
-                                </div>
-                            </div>
-                            <div class="row mb-3">
-                                <label for="inputJurusan" class="col-sm-2 col-form-label">Jurusan</label>
-                                <div class="col-sm-10">
-                                    <select class="form-select" name="major_id" aria-label="Default select example"
-                                        required>
-                                        <option selected disabled value="">Pilih Jurusan</option>
-                                        @foreach ($majors as $major)
-                                            <option
-                                                value="{{ $major->id }}"{{ $siswa->major_id == $major->id ? 'selected' : '' }}>
-                                                {{ $major->kode ?? '' }} | {{ $major->nama ?? '' }}
-                                            </option>
+                                    <select name="student_id" id="student_id" class="form-select">
+                                        <option selected disabled>Pilih Siswa</option>
+                                        @foreach ($data as $student)
+                                            <option value="{{ $student->id }}" {{ $item->student_id == $student->id ? 'selected' : '' }}>{{ $student->user->name ?? '-' }}</option>
                                         @endforeach
                                     </select>
                                 </div>
                             </div>
                             <div class="row mb-3">
-                                <label for="inputPassword" class="col-sm-2 col-form-label">Password</label>
+                                <label for="jurusan" class="col-sm-2 col-form-label">Jurusan</label>
                                 <div class="col-sm-10">
-                                    <input type="password" name="password" class="form-control">
+                                    <input type="text" class="form-control" id="jurusan" value="{{ $item->student->major->nama ?? '' }}" placeholder="Jurusan" disabled>
+                                </div>
+                            </div>
+                            <div class="row mb-3">
+                                <label for="dudi_name" class="col-sm-2 col-form-label">Nama Perusahaan</label>
+                                <div class="col-sm-10">
+                                    <input type="text" class="form-control" id="dudi_name" value="{{ $item->student->pklData->dudi->user->name ?? '' }}" placeholder="Nama Perusahaan" disabled>
+                                </div>
+                            </div>
+                            <div class="row mb-3">
+                                <label for="kejadian" class="col-sm-2 col-form-label">Kejadian</label>
+                                <div class="col-sm-10">
+                                    <textarea class="form-control" name="kejadian" id="kejadian" cols="30" rows="2" placeholder="Kejadian">{!! $item->kejadian ?? '' !!}</textarea>
+                                </div>
+                            </div>
+                            <div class="row mb-3">
+                                <label for="keterangan" class="col-sm-2 col-form-label">Keterangan</label>
+                                <div class="col-sm-10">
+                                    <textarea class="form-control" name="keterangan" id="keterangan" cols="30" rows="4" placeholder="Keterangan">{!! $item->keterangan ?? '' !!}</textarea>
+                                </div>
+                            </div>
+                            <div class="row mb-3">
+                                <label for="tindakan" class="col-sm-2 col-form-label">Tindakan</label>
+                                <div class="col-sm-10">
+                                    <input type="text" class="form-control" name="tindakan" value="{{ $item->tindakan ?? '' }}">
+                                </div>
+                            </div>
+                            <div class="row mb-3">
+                                <label for="dokumentasi" class="col-sm-2 col-form-label">Foto Sebelumnya</label>
+                                <div class="col-sm-10">
+                                    <img src="{{ Storage::url($item->dokumentasi) }}" alt="" width="100" height="100" class="img-fluid">
+                                </div>
+                            </div>
+                            <div class="row mb-3">
+                                <label for="dokumentasi" class="col-sm-2 col-form-label">Foto Dokumentasi</label>
+                                <div class="col-sm-10">
+                                    <input type="file" class="form-control" name="dokumentasi">
                                 </div>
                             </div>
 

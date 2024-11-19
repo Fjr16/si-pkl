@@ -99,6 +99,7 @@ Route::middleware('auth')->group(function () {
     Route::get('monitoring/guru/edit/{id}', [MonitoringController::class, 'edit'])->name('monitoring/guru.edit');
     Route::put('monitoring/guru/update/{id}', [MonitoringController::class, 'update'])->name('monitoring/guru.update');
     Route::delete('monitoring/guru/destroy/{id}', [MonitoringController::class, 'destroy'])->name('monitoring/guru.destroy');
+    Route::get('monitoring/get/pkl/data/{id}', [MonitoringController::class, 'getPklData'])->name('monitoring/get/pkl.data');
 
     // Data PKL
     Route::get('data/pkl/siswa', [PklController::class, 'index'])->name('data/pkl/siswa.index');

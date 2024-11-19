@@ -20,10 +20,8 @@
                     <div class="card-body">
                         <div class="d-flex align-items-center">
                             <h5 class="card-title">{{ $title ?? '' }}</h5>
-                            {{-- @if (Auth::user()->role == 'Siswa') --}}
                                 <a href="{{ route('monitoring/guru.create') }}" class="btn btn-sm btn-primary ms-auto"><i
                                         class="bi bi-plus-lg"></i> Tambah Monitoring</a>
-                            {{-- @endif --}}
                         </div>
 
                         <table class="table datatable">
@@ -42,27 +40,36 @@
                                 </tr>
                             </thead>
                             <tbody>
-                                {{-- @foreach ($data as $item)
+                                @foreach ($data as $item)
                                     <tr>
                                         <td>{{ $loop->iteration }}</td>
-                                        <td>{{ $item->user->username ?? '' }}</td>
-                                        <td>{{ $item->user->email ?? '' }}</td>
-                                        <td>{{ $item->user->name ?? '' }}</td>
-                                        <td>{{ $item->jk ?? '' }}</td>
-                                        <td>{{ $item->no_hp ?? '' }}</td>
-                                        <td class="d-flex">
-                                            <a href="{{ route('siswa.edit', $item->id) }}"
-                                                class="btn btn-sm btn-warning"><i class="bi bi-pencil text-white"></i></a>
-                                            <form action="{{ route('siswa.destroy', $item->id) }}" method="POST">
-                                                @csrf
-                                                @method('DELETE')
-                                                <button type="submit" class="btn btn-sm btn-danger ms-2"
-                                                    onclick="return confirm('Yakin ingin menghapus data?')"><i
-                                                        class="bi bi-trash"></i></button>
-                                            </form>
+                                        <td>{{ $item->teacher->user->name ?? '-' }}</td>
+                                        <td>{{ $item->student->user->name ?? '-' }}</td>
+                                        <td>{{ $item->student->major->nama ?? '-' }}</td>
+                                        <td>{{ $item->student->pklData->dudi->user->name ?? '-' }}</td>
+                                        <td>{{ $item->kejadian ?? '-' }}</td>
+                                        <td>{{ $item->keterangan ?? '-' }}</td>
+                                        <td>{{ $item->tindakan ?? '-' }}</td>
+                                        <td>
+                                            <a href="{{ Storage::url($item->dokumentasi ?? '-') }}">
+                                                <img src="{{ Storage::url($item->dokumentasi ?? '-') }}" alt="" class="img-fluid" width="70" height="70">
+                                            </a>
+                                        </td>
+                                        <td>
+                                            <div class="d-flex">
+                                                <a href="{{ route('monitoring/guru.edit', $item->id) }}"
+                                                    class="btn btn-sm btn-warning"><i class="bi bi-pencil text-white"></i></a>
+                                                <form action="{{ route('monitoring/guru.destroy', $item->id) }}" method="POST">
+                                                    @csrf
+                                                    @method('DELETE')
+                                                    <button type="submit" class="btn btn-sm btn-danger ms-2"
+                                                        onclick="return confirm('Yakin ingin menghapus data?')"><i
+                                                            class="bi bi-trash"></i></button>
+                                                </form>
+                                            </div>
                                         </td>
                                     </tr>
-                                @endforeach --}}
+                                @endforeach
                             </tbody>
                         </table>
 
