@@ -33,4 +33,8 @@ class Student extends Model
     {
         return $this->hasMany(PklData::class);
     }
+    public function attendanceLists()
+    {
+        return $this->hasMany(AttendanceList::class);
+    }
 }
