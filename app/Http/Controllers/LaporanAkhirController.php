@@ -57,6 +57,7 @@ class LaporanAkhirController extends Controller
         $file = $request->file('laporan_akhir');
         $fileName = time() . '_' . $file->getClientOriginalName();
         $filePath = $file->storeAs('laporan-akhir-siswa', $fileName, 'public');
+        $file_size = $file->getSize() / (1024 * 1024);
 
         $item = $this->checkDuplicate(Auth::user()->student->id);
         if ($item) {
@@ -65,7 +66,7 @@ class LaporanAkhirController extends Controller
                 'tanggal' => $request->tanggal,
                 'file_name' => $fileName,
                 'file_path' => $filePath,
-                'file_size' => $file->getSize(),
+                'file_size' => round($file_size, 2),
             ]);
         }else{
             // Simpan metadata ke database
@@ -74,7 +75,7 @@ class LaporanAkhirController extends Controller
                 'tanggal' => $request->tanggal,
                 'file_name' => $fileName,
                 'file_path' => $filePath,
-                'file_size' => $file->getSize(),
+                'file_size' => round($file_size, 2),
             ]);
         }
 

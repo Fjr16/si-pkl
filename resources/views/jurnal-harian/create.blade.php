@@ -27,19 +27,20 @@
                             <div class="row mb-3">
                                 <label for="inputEmail" class="col-sm-2 col-form-label">Nama Siswa</label>
                                 <div class="col-sm-10">
-                                    <input type="text" class="form-control" name="student_id" value="{{ auth()->user()->name ?? '' }}" required disabled>
+                                    <input type="hidden" name="student_id" value="{{ auth()->user()->student->id ?? '' }}">
+                                    <input type="text" class="form-control" value="{{ auth()->user()->name ?? '' }}" required disabled>
                                 </div>
                             </div>
                             <div class="row mb-3">
                                 <label for="inputUsername" class="col-sm-2 col-form-label">Tanggal</label>
                                 <div class="col-sm-10">
-                                    <input type="date" class="form-control" name="tanggal" value="{{ date('Y-m-d') }}" required disabled>
+                                    <input type="date" class="form-control" value="{{ date('Y-m-d') }}" required disabled>
                                 </div>
                             </div>
                             <div class="row mb-3">
-                                <label for="inputNama" class="col-sm-2 col-form-label">Jenis Laporan</label>
+                                <label for="jenis_laporan" class="col-sm-2 col-form-label">Jenis Laporan</label>
                                 <div class="col-sm-10">
-                                    <input type="text" class="form-control" name="jenis_laporan" placeholder="Jenis Laporan" required>
+                                    <input type="text" class="form-control" name="jenis_laporan" id="jenis_laporan" placeholder="Jenis Laporan" required>
                                 </div>
                             </div>
                             <div class="row mb-3">
@@ -49,9 +50,9 @@
                                 </div>
                             </div>
                             <div class="row mb-3">
-                                <label for="file-laporan" class="col-sm-2 col-form-label">Upload File</label>
+                                <label for="file-laporan" class="col-sm-2 col-form-label">Upload File (PDF) (Max : 2 MB)</label>
                                 <div class="col-sm-10">
-                                    <input type="file" name="file_laporan" class="form-control" required>
+                                    <input type="file" name="file_laporan" class="form-control" id="file-laporan" required>
                                 </div>
                             </div>
                             <div class="row mb-3">

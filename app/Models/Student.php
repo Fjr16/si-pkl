@@ -41,4 +41,8 @@ class Student extends Model
     {
         return $this->hasOne(LastReport::class);
     }
+    public function dailyReports()
+    {
+        return $this->hasMany(DailyReport::class);
+    }
 }

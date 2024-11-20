@@ -87,6 +87,7 @@ Route::middleware('auth')->group(function () {
     Route::get('jurnal/harian/edit/{id}', [JurnalHarianController::class, 'edit'])->name('jurnal/harian.edit');
     Route::put('jurnal/harian/update/{id}', [JurnalHarianController::class, 'update'])->name('jurnal/harian.update');
     Route::delete('jurnal/harian/destroy/{id}', [JurnalHarianController::class, 'destroy'])->name('jurnal/harian.destroy');
+    Route::get('jurnal/harian/download/{id}', [JurnalHarianController::class, 'download'])->name('jurnal/harian.download');
 
     // Laporan Akhir
     Route::get('laporan/akhir', [LaporanAkhirController::class, 'index'])->name('laporan/akhir.index');

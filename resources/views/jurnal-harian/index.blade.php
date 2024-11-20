@@ -34,32 +34,38 @@
                                     <th>Nama Siswa</th>
                                     <th>Jenis Laporan</th>
                                     <th>Keterangan</th>
-                                    <th>File Laporan</th>
+                                    <th>Laporan</th>
                                     <th>Action</th>
                                 </tr>
                             </thead>
                             <tbody>
-                                {{-- @foreach ($data as $item)
+                                @foreach ($data as $item)
                                     <tr>
                                         <td>{{ $loop->iteration }}</td>
-                                        <td>{{ $item->user->username ?? '' }}</td>
-                                        <td>{{ $item->user->email ?? '' }}</td>
-                                        <td>{{ $item->user->name ?? '' }}</td>
-                                        <td>{{ $item->jk ?? '' }}</td>
-                                        <td>{{ $item->no_hp ?? '' }}</td>
-                                        <td class="d-flex">
-                                            <a href="{{ route('siswa.edit', $item->id) }}"
-                                                class="btn btn-sm btn-warning"><i class="bi bi-pencil text-white"></i></a>
-                                            <form action="{{ route('siswa.destroy', $item->id) }}" method="POST">
-                                                @csrf
-                                                @method('DELETE')
-                                                <button type="submit" class="btn btn-sm btn-danger ms-2"
-                                                    onclick="return confirm('Yakin ingin menghapus data?')"><i
-                                                        class="bi bi-trash"></i></button>
-                                            </form>
+                                        <td>{{ $item->created_at->format('Y-m-d H:i') ?? '' }}</td>
+                                        <td>{{ $item->student->user->name ?? '-' }}</td>
+                                        <td>{{ $item->jenis_laporan ?? '-' }}</td>
+                                        <td>{!! $item->keterangan ?? '-' !!}</td>
+                                        <td>
+                                            <a href="{{ route('jurnal/harian.download', $item->id) }}">
+                                                {{ ($item->file_name ?? '-') . ' (' . ($item->file_size ?? '-') . ' MB)' }}
+                                            </a>
+                                        </td>
+                                        <td>
+                                            <div class="d-flex">
+                                                <a href="{{ route('jurnal/harian.edit', $item->id) }}"
+                                                    class="btn btn-sm btn-warning"><i class="bi bi-pencil text-white"></i></a>
+                                                <form action="{{ route('jurnal/harian.destroy', $item->id) }}" method="POST">
+                                                    @csrf
+                                                    @method('DELETE')
+                                                    <button type="submit" class="btn btn-sm btn-danger ms-2"
+                                                        onclick="return confirm('Yakin ingin menghapus data?')"><i
+                                                            class="bi bi-trash"></i></button>
+                                                </form>
+                                            </div>
                                         </td>
                                     </tr>
-                                @endforeach --}}
+                                @endforeach
                             </tbody>
                         </table>
 

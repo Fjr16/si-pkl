@@ -17,7 +17,7 @@ return new class extends Migration
             $table->date('tanggal')->required();
             $table->string('file_name')->required();
             $table->string('file_path')->required();
-            $table->integer('file_size')->required();
+            $table->float('file_size',3,2)->required();
             $table->timestamps();
         });
     }

@@ -22,88 +22,52 @@
                             <h5 class="card-title">{{ $title ?? '' }}</h5>
                         </div>
 
-                        <form method="POST" action="{{ route('siswa.update', $siswa->id) }}" enctype="multipart/form-data">
+                        <form method="POST" action="{{ route('jurnal/harian.update', $item->id) }}" enctype="multipart/form-data">
                             @csrf
                             @method('PUT')
                             <div class="row mb-3">
-                                <label for="inputUsername" class="col-sm-2 col-form-label">Username</label>
+                                <label for="inputEmail" class="col-sm-2 col-form-label">Nama Siswa</label>
                                 <div class="col-sm-10">
-                                    <input type="number" class="form-control" name="username"
-                                        value="{{ $siswa->user->username ?? '' }}" required>
+                                    <input type="text" class="form-control" value="{{ auth()->user()->name ?? '' }}" required disabled>
                                 </div>
                             </div>
                             <div class="row mb-3">
-                                <label for="inputEmail" class="col-sm-2 col-form-label">Email</label>
+                                <label for="inputUsername" class="col-sm-2 col-form-label">Tanggal</label>
                                 <div class="col-sm-10">
-                                    <input type="email" class="form-control" name="email"
-                                        value="{{ $siswa->user->email ?? '' }}" required>
+                                    <input type="date" class="form-control" value="{{ $item->created_at->format('Y-m-d') ?? date('Y-m-d') }}" required disabled>
                                 </div>
                             </div>
                             <div class="row mb-3">
-                                <label for="inputNama" class="col-sm-2 col-form-label">Nama</label>
+                                <label for="jenis_laporan" class="col-sm-2 col-form-label">Jenis Laporan</label>
                                 <div class="col-sm-10">
-                                    <input type="text" class="form-control" name="nama"
-                                        value="{{ $siswa->user->name ?? '' }}" required>
+                                    <input type="text" class="form-control" name="jenis_laporan" id="jenis_laporan" value="{{ $item->jenis_laporan ?? '' }}" placeholder="Jenis Laporan" required>
                                 </div>
                             </div>
                             <div class="row mb-3">
-                                <label for="inputJK" class="col-sm-2 col-form-label">Jenis Kelamin</label>
+                                <label for="keterangan" class="col-sm-2 col-form-label">Keterangan</label>
                                 <div class="col-sm-10">
-                                    <select class="form-select" name="jk" aria-label="Default select example" required>
-                                        <option selected disabled value="">Pilih Jenis Kelamin</option>
-                                        <option value="Laki-Laki"{{ $siswa->jk == 'Laki-Laki' ? 'selected' : '' }}>Laki-Laki
-                                        </option>
-                                        <option value="Perempuan"{{ $siswa->jk == 'Perempuan' ? 'selected' : '' }}>Perempuan
-                                        </option>
-                                    </select>
+                                    <textarea class="form-control" name="keterangan" id="keterangan" cols="30" rows="10" placeholder="Keterangan">{!! $item->keterangan ?? '' !!}</textarea>
                                 </div>
                             </div>
                             <div class="row mb-3">
-                                <label for="inputTempatLahir" class="col-sm-2 col-form-label">Tempat Lahir</label>
+                                <label for="file-sebelumnya" class="col-sm-2 col-form-label">File Sebelumnya</label>
                                 <div class="col-sm-10">
-                                    <input type="text" class="form-control" name="tmp_lhr"
-                                        value="{{ $siswa->tmp_lhr ?? '' }}" required>
+                                    @if ($item->file_name)
+                                    <a href="{{ route('jurnal/harian.download', $item->id) }}">
+                                        {{ ($item->file_name ?? '-') . ' (' . ($item->file_size ?? '-') . ' MB)' }}
+                                    </a>
+                                    @else
+                                    <p class="text-danger">---- File Not Found ----</p>
+                                    @endif
                                 </div>
                             </div>
                             <div class="row mb-3">
-                                <label for="inputTanggalLahir" class="col-sm-2 col-form-label">Tanggal Lahir</label>
+                                <label for="file-laporan" class="col-sm-2 col-form-label">Upload File (PDF) (Max : 2 MB)</label>
                                 <div class="col-sm-10">
-                                    <input type="date" class="form-control" name="tgl_lhr"
-                                        value="{{ $siswa->tgl_lhr ?? '' }}" required>
-                                </div>
-                            </div>
-                            <div class="row mb-3">
-                                <label for="inputAlamat" class="col-sm-2 col-form-label">Alamat</label>
-                                <div class="col-sm-10">
-                                    <textarea name="alamat" class="form-control" required>{{ $siswa->alamat ?? '' }}</textarea>
-                                </div>
-                            </div>
-                            <div class="row mb-3">
-                                <label for="inputNoHP" class="col-sm-2 col-form-label">No. HP</label>
-                                <div class="col-sm-10">
-                                    <input type="number" name="no_hp" class="form-control"
-                                        value="{{ $siswa->no_hp ?? '' }}" required>
-                                </div>
-                            </div>
-                            <div class="row mb-3">
-                                <label for="inputJurusan" class="col-sm-2 col-form-label">Jurusan</label>
-                                <div class="col-sm-10">
-                                    <select class="form-select" name="major_id" aria-label="Default select example"
-                                        required>
-                                        <option selected disabled value="">Pilih Jurusan</option>
-                                        @foreach ($majors as $major)
-                                            <option
-                                                value="{{ $major->id }}"{{ $siswa->major_id == $major->id ? 'selected' : '' }}>
-                                                {{ $major->kode ?? '' }} | {{ $major->nama ?? '' }}
-                                            </option>
-                                        @endforeach
-                                    </select>
-                                </div>
-                            </div>
-                            <div class="row mb-3">
-                                <label for="inputPassword" class="col-sm-2 col-form-label">Password</label>
-                                <div class="col-sm-10">
-                                    <input type="password" name="password" class="form-control">
+                                    <input type="file" name="file_laporan" class="form-control" id="file-laporan">
+                                    <div class="text-danger">
+                                        <small>* Kosongkan bila tidak ingin mengupdate file laporan</small>
+                                    </div>
                                 </div>
                             </div>
 
