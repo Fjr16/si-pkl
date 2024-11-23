@@ -22,32 +22,24 @@
                             <h5 class="card-title">{{ $title ?? '' }}</h5>
                         </div>
 
-                        <form method="POST" action="{{ route('sertifikat.store') }}" enctype="multipart/form-data">
+                        <form method="POST" action="{{ route('sertifikat.store', $item->id) }}" enctype="multipart/form-data">
                             @csrf
                             <div class="row mb-3">
                                 <label for="dudi_id" class="col-sm-2 col-form-label">Nama Perusahaan</label>
                                 <div class="col-sm-10">
-                                    <select name="dudi_id" id="dudi_id" class="form-select">
-                                        <option value="perusahaan 1" selected disabled>perusahaan 1</option>
-                                    </select>
+                                    <input type="text" id="dudi_id" class="form-control" value="{{ $item->dudi->user->name ?? '-' }}" disabled>
                                 </div>
                             </div>
                             <div class="row mb-3">
                                 <label for="student_id" class="col-sm-2 col-form-label">Nama Siswa</label>
                                 <div class="col-sm-10">
-                                    <select name="student_id" id="student_id" class="form-select">
-                                        <option value="siswa 1">siswa 1</option>
-                                        <option value="siswa 2">siswa 2</option>
-                                    </select>
+                                    <input type="text" id="student_id" class="form-control" value="{{ $item->student->user->name ?? '-' }}" disabled>
                                 </div>
                             </div>
                             <div class="row mb-3">
                                 <label for="teacher_id" class="col-sm-2 col-form-label">Guru Pembimbing</label>
                                 <div class="col-sm-10">
-                                    <select name="teacher_id" id="teacher_id" class="form-select">
-                                        <option value="guru 1">guru 1</option>
-                                        <option value="guru 2">guru 2</option>
-                                    </select>
+                                    <input type="text" id="teacher_id" class="form-control" value="{{ $item->teacher->user->name ?? '-' }}" disabled>
                                 </div>
                             </div>
                             <div class="row mb-3">

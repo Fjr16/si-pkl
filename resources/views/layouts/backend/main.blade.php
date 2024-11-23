@@ -8,6 +8,7 @@
     <title>SI-PKL | {{ $title ?? '' }}</title>
     <meta content="" name="description">
     <meta content="" name="keywords">
+    <meta content="{{ csrf_token() }}" name="csrf-token">
 
     <!-- Favicons -->
     <link href="{{ asset('assets/img/logo.png') }}" rel="icon">

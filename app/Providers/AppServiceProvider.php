@@ -33,7 +33,7 @@ class AppServiceProvider extends ServiceProvider
         });
 
         Gate::define('dudi', function($user){
-            return $user->role === 'Dudi'; 
+            return $user->role === 'DUDI'; 
         });
     }
 }

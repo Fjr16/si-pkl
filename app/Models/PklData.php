@@ -24,4 +24,7 @@ class PklData extends Model
     public function teacher() {
         return $this->belongsTo(Teacher::class);
     }
+    public function certificate() {
+        return $this->hasOne(Certificate::class);
+    }
 }

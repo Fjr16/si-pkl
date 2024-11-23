@@ -20,10 +20,6 @@
                     <div class="card-body">
                         <div class="d-flex align-items-center">
                             <h5 class="card-title">{{ $title ?? '' }}</h5>
-                            {{-- @if (Auth::user()->role == 'Admin') --}}
-                                <a href="{{ route('sertifikat.create') }}" class="btn btn-sm btn-primary ms-auto"><i
-                                        class="bi bi-plus-lg"></i> Upload Sertifikat</a>
-                            {{-- @endif --}}
                         </div>
 
                         <table class="table datatable">
@@ -33,31 +29,32 @@
                                     <th>Nama Siswa</th>
                                     <th>Dudi</th>
                                     <th>Guru Pembimbing</th>
+                                    <th>Sertifikat</th>
                                     <th>Action</th>
                                 </tr>
                             </thead>
                             <tbody>
-                                {{-- @foreach ($data as $item)
+                                @foreach ($data as $item)
                                     <tr>
                                         <td>{{ $loop->iteration }}</td>
-                                        <td>{{ $item->user->name ?? '' }}</td>
-                                        <td>{{ $item->user->email ?? '' }}</td>
-                                        <td>{{ $item->user->name ?? '' }}</td>
-                                        <td>{{ $item->jk ?? '' }}</td>
-                                        <td>{{ $item->no_hp ?? '' }}</td>
-                                        <td class="d-flex">
-                                            <a href="{{ route('siswa.edit', $item->id) }}"
+                                        <td>{{ $item->student->user->name ?? '-' }}</td>
+                                        <td>{{ $item->dudi->user->name ?? '-' }}</td>
+                                        <td>{{ $item->teacher->user->name ?? '-' }}</td>
+                                        <td>
+                                            @if ($item->certificate)
+                                            <div class="d-flex">
+                                                <a href="{{ route('sertifikat.download', $item->certificate->id) }}" class="btn btn-sm btn-primary me-1"><i class="bi bi-download"></i> Unduh</a>
+                                                <a href="{{ route('sertifikat/signature.add', $item->certificate->id) }}" class="btn btn-sm btn-success"><i class="bi bi-vector-pen"></i> Validasi</a>
+                                            </div>
+                                            @else
+                                                <a href="{{ route('sertifikat.create', $item->id) }}" class="btn btn-sm btn-primary">Upload</a>
+                                            @endif
+                                        <td>
+                                            <a href="{{ route('sertifikat.edit', $item->id) }}"
                                                 class="btn btn-sm btn-warning"><i class="bi bi-pencil text-white"></i></a>
-                                            <form action="{{ route('siswa.destroy', $item->id) }}" method="POST">
-                                                @csrf
-                                                @method('DELETE')
-                                                <button type="submit" class="btn btn-sm btn-danger ms-2"
-                                                    onclick="return confirm('Yakin ingin menghapus data?')"><i
-                                                        class="bi bi-trash"></i></button>
-                                            </form>
                                         </td>
                                     </tr>
-                                @endforeach --}}
+                                @endforeach
                             </tbody>
                         </table>
 
