@@ -130,21 +130,45 @@ class SertifikatController extends Controller
         $pageCount = $pdf->setSourceFile($pdfPath);
 
         for ($i = 1; $i <= $pageCount; $i++) {
-            $pdf->AddPage();
             $templateId = $pdf->importPage($i);
+            $size = $pdf->getTemplateSize($templateId);
+            // tambahkan halaman dengan ukuran asli
+            $pdf->AddPage($size);
             $pdf->useTemplate($templateId);
     
             // Tambahkan tanda tangan di halaman terakhir
             if ($i === $pageCount) {
-                $x = 150; // Posisi X
-                $y = 250; // Posisi Y
-                $width = 50; // Lebar tanda tangan
-                $pdf->Image($signaturePathPublic, $x, $y, $width);
+
+                // ambil dimensi halaman
+                $pageWidth = $pdf->GetPageWidth();
+                $pageHeight = $pdf->GetPageHeight();
+
+                // p dan l tanda tangan
+                $signatureWidth = 60;
+                $signatureHeight = 40;
+
+                // Periksa orientasi dokumen
+                if ($pageWidth > $pageHeight) {
+                    // Jika orientasi landscape
+                    $x = ($pageWidth - $signatureWidth) / 4;
+                    $y = $pageHeight - $signatureHeight - 40; // Jarak 10 mm dari tepi bawah
+                } else {
+                    // Jika orientasi portrait
+                    $x = $pageWidth - $signatureWidth - 10; // Jarak 10 mm dari tepi kanan
+                    $y = $pageHeight - $signatureHeight - 10; // Jarak 10 mm dari tepi bawah
+                }
+
+                $pdf->Image($signaturePathPublic, $x, $y, $signatureWidth, $signatureHeight);
             }
         }
-        $newPdfFilePath = 'signed_documents/' . time() . '_signed.pdf';
+        $newPdfFilePath = 'sertifikat_pkl/' . time() . '_signed.pdf';
         $outputPath = storage_path('app/public/' . $newPdfFilePath);
         $pdf->Output($outputPath, 'F');
+
+        if ($item->file_path) {
+            Storage::disk('public')->delete($item->file_path);
+        }
+        Storage::disk('public')->delete($signaturePath);
 
         $item->update([
             'status' => 'approved',
@@ -153,21 +177,5 @@ class SertifikatController extends Controller
 
         return redirect()->route('sertifikat.index')->with('success', 'Berhasil Divalidasi');
 
-    }
-
-    /**
-     * Update the specified resource in storage.
-     */
-    public function update(Request $request, string $id)
-    {
-        //
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     */
-    public function destroy(string $id)
-    {
-        //
     }
 }

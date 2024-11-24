@@ -117,9 +117,6 @@ Route::middleware('auth')->group(function () {
     Route::get('sertifikat', [SertifikatController::class, 'index'])->name('sertifikat.index');
     Route::get('sertifikat/create/{id}', [SertifikatController::class, 'create'])->name('sertifikat.create');
     Route::post('sertifikat/store/{id}', [SertifikatController::class, 'store'])->name('sertifikat.store');
-    Route::get('sertifikat/edit/{id}', [SertifikatController::class, 'edit'])->name('sertifikat.edit');
-    Route::put('sertifikat/update/{id}', [SertifikatController::class, 'update'])->name('sertifikat.update');
-    Route::delete('sertifikat/destroy/{id}', [SertifikatController::class, 'destroy'])->name('sertifikat.destroy');
     Route::get('sertifikat/download/{id}', [SertifikatController::class, 'download'])->name('sertifikat.download');
     Route::get('sertifikat/signature/add/{id}', [SertifikatController::class, 'signatureAdd'])->name('sertifikat/signature.add');
     Route::post('sertifikat/signature/store/{id}', [SertifikatController::class, 'signatureStore'])->name('sertifikat/signature.store');

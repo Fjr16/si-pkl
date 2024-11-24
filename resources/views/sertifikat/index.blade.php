@@ -30,7 +30,8 @@
                                     <th>Dudi</th>
                                     <th>Guru Pembimbing</th>
                                     <th>Sertifikat</th>
-                                    <th>Action</th>
+                                    <th>Status</th>
+                                    {{-- <th>Action</th> --}}
                                 </tr>
                             </thead>
                             <tbody>
@@ -44,15 +45,23 @@
                                             @if ($item->certificate)
                                             <div class="d-flex">
                                                 <a href="{{ route('sertifikat.download', $item->certificate->id) }}" class="btn btn-sm btn-primary me-1"><i class="bi bi-download"></i> Unduh</a>
-                                                <a href="{{ route('sertifikat/signature.add', $item->certificate->id) }}" class="btn btn-sm btn-success"><i class="bi bi-vector-pen"></i> Validasi</a>
+                                                @if ($item->certificate->status === 'pending')
+                                                    <a href="{{ route('sertifikat/signature.add', $item->certificate->id) }}" class="btn btn-sm btn-success"><i class="bi bi-vector-pen"></i> Validasi</a>
+                                                @endif
                                             </div>
                                             @else
                                                 <a href="{{ route('sertifikat.create', $item->id) }}" class="btn btn-sm btn-primary">Upload</a>
                                             @endif
+                                        </td>
                                         <td>
+                                            <span class="badge bg-{{ $item->certificate ? ($item->certificate->status === 'approved' ? 'success' : 'warning') : 'warning' }}">
+                                                {{ $item->certificate ? $item->certificate->status : 'pending' }}
+                                            </span>
+                                        </td>
+                                        {{-- <td>
                                             <a href="{{ route('sertifikat.edit', $item->id) }}"
                                                 class="btn btn-sm btn-warning"><i class="bi bi-pencil text-white"></i></a>
-                                        </td>
+                                        </td> --}}
                                     </tr>
                                 @endforeach
                             </tbody>

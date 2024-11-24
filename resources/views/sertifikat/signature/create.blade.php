@@ -45,6 +45,10 @@
         const dataImage = document.getElementById('dataImage');
         let isDrawing = false;
 
+        // Set warna dan tebal default
+        ctx.strokeStyle = 'black'; // Warna garis (hitam)
+        ctx.lineWidth = 4; // Tebal garis default (2px)
+
         canvas.addEventListener('mousedown', (e) => {
             isDrawing = true;
             ctx.beginPath();
