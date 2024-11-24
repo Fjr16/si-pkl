@@ -18,40 +18,50 @@
 
         <li class="nav-heading">Data Master</li>
 
+        @can('admin')
         <li class="nav-item">
             <a class="nav-link {{ Request::is('user*') ? '' : 'collapsed' }}" href="{{ route('user.index') }}">
                 <i class="bi bi-people"></i>
                 <span>Data User</span>
             </a>
         </li>
+        @endcan
 
+        @canany(['guru', 'admin'])
         <li class="nav-item">
             <a class="nav-link {{ Request::is('guru*') ? '' : 'collapsed' }}" href="{{ route('guru.index') }}">
                 <i class="bi bi-person"></i>
                 <span>Data Guru</span>
             </a>
         </li>
+        @endcanany
 
+        @canany(['dudi', 'admin'])
         <li class="nav-item">
             <a class="nav-link {{ Request::is('dudi*') ? '' : 'collapsed' }}" href="{{ route('dudi.index') }}">
                 <i class="bi bi-building"></i>
                 <span>Data DUDI</span>
             </a>
         </li>
+        @endcanany
 
+        @canany(['siswa', 'admin'])
         <li class="nav-item">
             <a class="nav-link {{ Request::is('siswa*') ? '' : 'collapsed' }}" href="{{ route('siswa.index') }}">
                 <i class="bi bi-mortarboard"></i>
                 <span>Data Siswa</span>
             </a>
         </li>
-
+        @endcanany()
+            
+        @can('admin')
         <li class="nav-item">
             <a class="nav-link {{ Request::is('jurusan*') ? '' : 'collapsed' }}" href="{{ route('jurusan.index') }}">
                 <i class="bi bi-stack"></i>
                 <span>Data Jurusan</span>
             </a>
         </li>
+        @endcan
 
         <li class="nav-heading">Praktek Kerja Lapangan</li>
 
@@ -69,12 +79,14 @@
             </a>
         </li>
 
-        <li class="nav-item">
-            <a class="nav-link {{ Request::is('monitoring*') ? '' : 'collapsed' }}" href="{{ route('monitoring/guru.index') }}">
-                <i class="bi bi-tv"></i>
-                <span>Monitoring</span>
-            </a>
-        </li>
+        @can('guru')
+            <li class="nav-item">
+                <a class="nav-link {{ Request::is('monitoring*') ? '' : 'collapsed' }}" href="{{ route('monitoring/guru.index') }}">
+                    <i class="bi bi-tv"></i>
+                    <span>Monitoring</span>
+                </a>
+            </li>
+        @endcan
 
         <li class="nav-item">
             <a class="nav-link {{ Request::is('jurnal*') ? '' : 'collapsed' }}" href="{{ route('jurnal/harian.index') }}">
@@ -89,21 +101,14 @@
                 <span>Laporan Akhir</span>
             </a>
         </li>
-        <li class="nav-item">
-            <a class="nav-link {{ Request::is('sertifikat*') ? '' : 'collapsed' }}" href="{{ route('sertifikat.index') }}">
-                <i class="bi bi-patch-check"></i>
-                <span>Sertifikat</span>
-            </a>
-        </li>
-
-        <li class="nav-heading">Lainnya</li>
-
-        <li class="nav-item">
-            <a class="nav-link {{ Request::is('/*') ? '' : 'collapsed' }}" href="#">
-                <i class="bi bi-folder"></i>
-                <span>Berkas</span>
-            </a>
-        </li>
+        @canany(['dudi', 'guru', 'siswa'])
+            <li class="nav-item">
+                <a class="nav-link {{ Request::is('sertifikat*') ? '' : 'collapsed' }}" href="{{ route('sertifikat.index') }}">
+                    <i class="bi bi-patch-check"></i>
+                    <span>Sertifikat</span>
+                </a>
+            </li>
+        @endcanany
     </ul>
 
 </aside>

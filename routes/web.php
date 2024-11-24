@@ -28,10 +28,7 @@ Route::post('forgot-password', [AuthController::class, 'sendLink'])->middleware(
 Route::get('reset-password/{token}', [AuthController::class, 'resetPasswordToken'])->middleware('guest')->name('password.reset');
 Route::post('reset-password', [AuthController::class, 'resetPassword'])->middleware('guest')->name('password.update');
 
-Route::middleware('auth')->group(function () {
-    // Dashboard
-    Route::get('/', [DashboardController::class, 'index'])->name('dashboard');
-
+Route::middleware('admin')->group(function () {
     // Data User
     Route::get('user', [UserController::class, 'index'])->name('user.index');
     Route::get('user/create', [UserController::class, 'create'])->name('user.create');
@@ -39,6 +36,11 @@ Route::middleware('auth')->group(function () {
     Route::get('user/edit/{id}', [UserController::class, 'edit'])->name('user.edit');
     Route::put('user/update/{id}', [UserController::class, 'update'])->name('user.update');
     Route::delete('user/destroy/{id}', [UserController::class, 'destroy'])->name('user.destroy');
+});
+
+Route::middleware('auth')->group(function () {
+    // Dashboard
+    Route::get('/', [DashboardController::class, 'index'])->name('dashboard');
 
     // Data Guru
     Route::get('guru', [TeacherController::class, 'index'])->name('guru.index');
@@ -46,7 +48,7 @@ Route::middleware('auth')->group(function () {
     Route::post('guru/store', [TeacherController::class, 'store'])->name('guru.store');
     Route::get('guru/edit/{id}', [TeacherController::class, 'edit'])->name('guru.edit');
     Route::put('guru/update/{id}', [TeacherController::class, 'update'])->name('guru.update');
-    Route::delete('guru/destroy/{id}', [TeacherController::class, 'destroy'])->name('guru.destroy');
+    Route::delete('guru/destroy/{id}', [TeacherController::class, 'destroy'])->name('guru.destroy')->middleware('admin');
 
     // Data DUDI
     Route::get('dudi', [DudiController::class, 'index'])->name('dudi.index');
@@ -106,18 +108,18 @@ Route::middleware('auth')->group(function () {
 
     // Data PKL
     Route::get('data/pkl/siswa', [PklController::class, 'index'])->name('data/pkl/siswa.index');
-    Route::get('data/pkl/siswa/create', [PklController::class, 'create'])->name('data/pkl/siswa.create');
-    Route::post('data/pkl/siswa/store', [PklController::class, 'store'])->name('data/pkl/siswa.store');
-    Route::get('data/pkl/siswa/edit/{id}', [PklController::class, 'edit'])->name('data/pkl/siswa.edit');
-    Route::put('data/pkl/siswa/update/{id}', [PklController::class, 'update'])->name('data/pkl/siswa.update');
-    Route::delete('data/pkl/siswa/destroy/{id}', [PklController::class, 'destroy'])->name('data/pkl/siswa.destroy');
-    Route::get('get/data/dudi/{id}', [PklController::class, 'getDataDudi'])->name('get/data.dudi');
+    Route::get('data/pkl/siswa/create', [PklController::class, 'create'])->name('data/pkl/siswa.create')->middleware('admin');
+    Route::post('data/pkl/siswa/store', [PklController::class, 'store'])->name('data/pkl/siswa.store')->middleware('admin');
+    Route::get('data/pkl/siswa/edit/{id}', [PklController::class, 'edit'])->name('data/pkl/siswa.edit')->middleware('admin');
+    Route::put('data/pkl/siswa/update/{id}', [PklController::class, 'update'])->name('data/pkl/siswa.update')->middleware('admin');
+    Route::delete('data/pkl/siswa/destroy/{id}', [PklController::class, 'destroy'])->name('data/pkl/siswa.destroy')->middleware('admin');
+    Route::get('get/data/dudi/{id}', [PklController::class, 'getDataDudi'])->name('get/data.dudi')->middleware('admin');
     
     // Sertifikat
     Route::get('sertifikat', [SertifikatController::class, 'index'])->name('sertifikat.index');
-    Route::get('sertifikat/create/{id}', [SertifikatController::class, 'create'])->name('sertifikat.create');
-    Route::post('sertifikat/store/{id}', [SertifikatController::class, 'store'])->name('sertifikat.store');
+    Route::get('sertifikat/create/{id}', [SertifikatController::class, 'create'])->name('sertifikat.create')->middleware('dudi');
+    Route::post('sertifikat/store/{id}', [SertifikatController::class, 'store'])->name('sertifikat.store')->middleware('dudi');
     Route::get('sertifikat/download/{id}', [SertifikatController::class, 'download'])->name('sertifikat.download');
-    Route::get('sertifikat/signature/add/{id}', [SertifikatController::class, 'signatureAdd'])->name('sertifikat/signature.add');
-    Route::post('sertifikat/signature/store/{id}', [SertifikatController::class, 'signatureStore'])->name('sertifikat/signature.store');
+    Route::get('sertifikat/signature/add/{id}', [SertifikatController::class, 'signatureAdd'])->name('sertifikat/signature.add')->middleware('guru');
+    Route::post('sertifikat/signature/store/{id}', [SertifikatController::class, 'signatureStore'])->name('sertifikat/signature.store')->middleware('guru');
 });

@@ -35,7 +35,9 @@
                                     <th>Jenis Kelamin</th>
                                     <th>Nama Perusahaan</th>
                                     <th>Nama Pembimbing</th>
+                                    @can('admin')
                                     <th>Action</th>
+                                    @endcan
                                 </tr>
                             </thead>
                             <tbody>
@@ -47,17 +49,19 @@
                                         <td>{{ $item->student->jk ?? '-' }}</td>
                                         <td>{{ $item->dudi->user->name ?? '-' }}</td>
                                         <td>{{ $item->teacher->user->name ?? '-' }}</td>
-                                        <td class="d-flex">
-                                            <a href="{{ route('data/pkl/siswa.edit', $item->id) }}"
-                                                class="btn btn-sm btn-warning"><i class="bi bi-pencil text-white"></i></a>
-                                            <form action="{{ route('data/pkl/siswa.destroy', $item->id) }}" method="POST">
-                                                @csrf
-                                                @method('DELETE')
-                                                <button type="submit" class="btn btn-sm btn-danger ms-2"
-                                                    onclick="return confirm('Yakin ingin menghapus data?')"><i
-                                                        class="bi bi-trash"></i></button>
-                                            </form>
-                                        </td>
+                                        @can('admin')     
+                                            <td class="d-flex">
+                                                <a href="{{ route('data/pkl/siswa.edit', $item->id) }}"
+                                                    class="btn btn-sm btn-warning"><i class="bi bi-pencil text-white"></i></a>
+                                                <form action="{{ route('data/pkl/siswa.destroy', $item->id) }}" method="POST">
+                                                    @csrf
+                                                    @method('DELETE')
+                                                    <button type="submit" class="btn btn-sm btn-danger ms-2"
+                                                        onclick="return confirm('Yakin ingin menghapus data?')"><i
+                                                            class="bi bi-trash"></i></button>
+                                                </form>
+                                            </td>
+                                        @endcan
                                     </tr>
                                 @endforeach
                             </tbody>

@@ -78,9 +78,6 @@ class SertifikatController extends Controller
      */
     public function download(string $id)
     {
-        if (!in_array(Auth::user()->role, ['DUDI', 'Guru', 'Siswa'])) {
-            abort(403, 'forbidden');
-        }
         try {
             $item = Certificate::findOrFail($id);
             return Storage::disk('public')->download($item->file_path);
@@ -97,7 +94,7 @@ class SertifikatController extends Controller
      */
     public function signatureAdd(string $id)
     {
-        $this->authorize('dudi');
+        $this->authorize('guru');
         $item = Certificate::find($id);
         return view('sertifikat.signature.create', [
             'title' => 'Data Sertifikat',
@@ -106,6 +103,7 @@ class SertifikatController extends Controller
     }
     public function signatureStore(string $id, Request $request)
     {
+        $this->authorize('guru');
         $item = Certificate::find($id);
         $request->validate([
             'signature' => 'required',

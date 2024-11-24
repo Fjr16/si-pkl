@@ -20,10 +20,10 @@
                     <div class="card-body">
                         <div class="d-flex align-items-center">
                             <h5 class="card-title">{{ $title ?? '' }}</h5>
-                            @if (Auth::user()->role == 'Admin')
+                            @can ('admin')
                                 <a href="{{ route('dudi.create') }}" class="btn btn-sm btn-primary ms-auto"><i
                                         class="bi bi-plus-lg"></i> Tambah DUDI</a>
-                            @endif
+                            @endcan
                         </div>
 
                         <table class="table datatable">
@@ -63,6 +63,7 @@
                                             <div class="d-flex">
                                                 <a href="{{ route('dudi.edit', $item->id) }}" class="btn btn-sm btn-warning"><i
                                                         class="bi bi-pencil text-white"></i></a>
+                                                @can('admin')
                                                 <form action="{{ route('dudi.destroy', $item->id) }}" method="POST">
                                                     @csrf
                                                     @method('DELETE')
@@ -70,6 +71,7 @@
                                                         onclick="return confirm('Yakin ingin menghapus data?')"><i
                                                             class="bi bi-trash"></i></button>
                                                 </form>
+                                                @endcan
                                             </div>
                                         </td>
                                     </tr>

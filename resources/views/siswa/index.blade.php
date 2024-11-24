@@ -20,10 +20,10 @@
                     <div class="card-body">
                         <div class="d-flex align-items-center">
                             <h5 class="card-title">{{ $title ?? '' }}</h5>
-                            @if (Auth::user()->role == 'Admin')
+                            @can ('admin')
                                 <a href="{{ route('siswa.create') }}" class="btn btn-sm btn-primary ms-auto"><i
                                         class="bi bi-plus-lg"></i> Tambah Siswa</a>
-                            @endif
+                            @endcan
                         </div>
 
                         <table class="table datatable">
@@ -54,13 +54,15 @@
                                         <td class="d-flex">
                                             <a href="{{ route('siswa.edit', $item->id) }}"
                                                 class="btn btn-sm btn-warning"><i class="bi bi-pencil text-white"></i></a>
-                                            <form action="{{ route('siswa.destroy', $item->id) }}" method="POST">
-                                                @csrf
-                                                @method('DELETE')
-                                                <button type="submit" class="btn btn-sm btn-danger ms-2"
-                                                    onclick="return confirm('Yakin ingin menghapus data?')"><i
-                                                        class="bi bi-trash"></i></button>
-                                            </form>
+                                                @can('admin')
+                                                <form action="{{ route('siswa.destroy', $item->id) }}" method="POST">
+                                                    @csrf
+                                                    @method('DELETE')
+                                                    <button type="submit" class="btn btn-sm btn-danger ms-2"
+                                                        onclick="return confirm('Yakin ingin menghapus data?')"><i
+                                                            class="bi bi-trash"></i></button>
+                                                </form>
+                                                @endcan
                                         </td>
                                     </tr>
                                 @endforeach

@@ -6,13 +6,20 @@ use App\Models\Major;
 use App\Models\Student;
 use App\Models\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 
 class StudentController extends Controller
 {
     public function index()
     {
+        if (!in_array(Auth::user()->role, ['Siswa', 'Admin'])) {
+            abort(403, 'Forbidden');
+        }
         $data = Student::all();
+        if (Auth::user()->role === 'Siswa') {
+            $data = Student::where('id', Auth::user()->student->id)->get();
+        }
 
         return view('siswa.index', [
             'title' => 'Data Siswa',
@@ -22,6 +29,7 @@ class StudentController extends Controller
 
     public function create()
     {
+        $this->authorize('admin');
         $majors = Major::all();
 
         return view('siswa.create', [
@@ -32,6 +40,7 @@ class StudentController extends Controller
 
     public function store(Request $request)
     {
+        $this->authorize('admin');
         $user = User::create([
             'email' => $request->input('email'),
             'username' => $request->input('username'),
@@ -56,6 +65,9 @@ class StudentController extends Controller
 
     public function edit($id)
     {
+        if (!in_array(Auth::user()->role, ['Siswa', 'Admin'])) {
+            abort(403, 'Forbidden');
+        }
         $siswa = Student::find($id);
         $majors = Major::all();
 
@@ -68,6 +80,9 @@ class StudentController extends Controller
 
     public function update(Request $request, $id)
     {
+        if (!in_array(Auth::user()->role, ['Siswa', 'Admin'])) {
+            abort(403, 'Forbidden');
+        }
         $siswa = Student::find($id);
 
         $siswa->update([
@@ -102,6 +117,7 @@ class StudentController extends Controller
 
     public function destroy($id)
     {
+        $this->authorize('admin');
         $siswa = Student::find($id);
         User::find($siswa->user_id)->delete();
         $siswa->delete();

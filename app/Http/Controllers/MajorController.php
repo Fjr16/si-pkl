@@ -9,6 +9,7 @@ class MajorController extends Controller
 {
     public function index()
     {
+        $this->authorize('admin');
         $data = Major::all();
 
         return view('jurusan.index', [
@@ -19,6 +20,7 @@ class MajorController extends Controller
 
     public function create()
     {
+        $this->authorize('admin');
         return view('jurusan.create', [
             'title' => 'Tambah Data Jurusan',
         ]);
@@ -26,6 +28,7 @@ class MajorController extends Controller
 
     public function store(Request $request)
     {
+        $this->authorize('admin');
         Major::create([
             'kode' => $request->input('kode'),
             'nama' => $request->input('nama'),
@@ -36,6 +39,8 @@ class MajorController extends Controller
 
     public function edit($id)
     {
+        $this->authorize('admin');
+
         $jurusan = Major::find($id);
 
         return view('jurusan.edit', [
@@ -46,6 +51,8 @@ class MajorController extends Controller
 
     public function update(Request $request, $id)
     {
+        $this->authorize('admin');
+
         $jurusan = Major::find($id);
 
         $jurusan->update([
@@ -58,6 +65,8 @@ class MajorController extends Controller
 
     public function destroy($id)
     {
+        $this->authorize('admin');
+
         $jurusan = Major::find($id);
         $jurusan->delete();
 

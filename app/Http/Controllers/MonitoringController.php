@@ -47,6 +47,7 @@ class MonitoringController extends Controller
      */
     public function store(Request $request)
     {
+        $this->authorize('guru');
         try {
             $data = $request->validate([
                 'teacher_id' => 'required|exists:teachers,id',
@@ -98,6 +99,7 @@ class MonitoringController extends Controller
      */
     public function update(Request $request, string $id)
     {
+        $this->authorize('guru');
         try {
             $item = TeacherMonitoring::findOrFail($id);
 
@@ -157,6 +159,7 @@ class MonitoringController extends Controller
     }
     public function getPklData(string $id)
     {
+        $this->authorize('guru');
         try {
             $item = Student::findOrFail($id);
             $jurusan = $item->major->nama ?? '-';

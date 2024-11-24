@@ -5,14 +5,20 @@ namespace App\Http\Controllers;
 use App\Models\Teacher;
 use App\Models\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 
 class TeacherController extends Controller
 {
     public function index()
     {
+        if (!in_array(Auth::user()->role, ['Admin','Guru'])) {
+            abort(403, 'Forbidden');
+        }
         $data = Teacher::all();
-
+        if (Auth::user()->role === 'Guru') {
+            $data = Teacher::where('id', Auth::user()->teacher->id)->get();
+        }
         return view('guru.index', [
             'title' => 'Data Guru',
             'data' => $data,
@@ -21,6 +27,7 @@ class TeacherController extends Controller
 
     public function create()
     {
+        $this->authorize('admin');
         return view('guru.create', [
             'title' => 'Tambah Data Guru',
         ]);
@@ -28,6 +35,7 @@ class TeacherController extends Controller
 
     public function store(Request $request)
     {
+        $this->authorize('admin');
         $user = User::create([
             'email' => $request->input('email'),
             'username' => $request->input('username'),
@@ -55,6 +63,9 @@ class TeacherController extends Controller
 
     public function edit($id)
     {
+        if (!in_array(Auth::user()->role, ['Admin','Guru'])) {
+            abort(403, 'Forbidden');
+        }
         $guru = Teacher::find($id);
 
         return view('guru.edit', [
@@ -65,6 +76,9 @@ class TeacherController extends Controller
 
     public function update(Request $request, $id)
     {
+        if (!in_array(Auth::user()->role, ['Admin','Guru'])) {
+            abort(403, 'Forbidden');
+        }
         $guru = Teacher::find($id);
 
         $guru->update([
@@ -102,6 +116,7 @@ class TeacherController extends Controller
 
     public function destroy($id)
     {
+        $this->authorize('admin');
         $guru = Teacher::find($id);
         User::find($guru->user_id)->delete();
         $guru->delete();

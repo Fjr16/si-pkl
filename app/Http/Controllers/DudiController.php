@@ -6,6 +6,7 @@ use App\Models\Dudi;
 use App\Models\Major;
 use App\Models\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Validation\ValidationException;
 
@@ -13,7 +14,13 @@ class DudiController extends Controller
 {
     public function index()
     {
+        if (!in_array(Auth::user()->role, ['DUDI', 'Admin'])) {
+            abort(403, 'Forbidden');
+        }
         $data = Dudi::all();
+        if (Auth::user()->role === 'DUDI') {
+            $data = Dudi::where('id', Auth::user()->dudi->id)->get();
+        }
 
         return view('dudi.index', [
             'title' => 'Data DUDI',
@@ -23,6 +30,7 @@ class DudiController extends Controller
 
     public function create()
     {
+        $this->authorize('admin');
         $data = Major::all();
         return view('dudi.create', [
             'title' => 'Tambah Data DUDI',
@@ -32,6 +40,7 @@ class DudiController extends Controller
 
     public function store(Request $request)
     {
+        $this->authorize('admin');
         try {
             $request->validate([
                 'major_id' => 'required|array',
@@ -69,6 +78,9 @@ class DudiController extends Controller
 
     public function edit($id)
     {
+        if (!in_array(Auth::user()->role, ['DUDI', 'Admin'])) {
+            abort(403, 'Forbidden');
+        }
         $dudi = Dudi::find($id);
         $data = Major::all();
         return view('dudi.edit', [
@@ -80,6 +92,9 @@ class DudiController extends Controller
 
     public function update(Request $request, $id)
     {
+        if (!in_array(Auth::user()->role, ['DUDI', 'Admin'])) {
+            abort(403, 'Forbidden');
+        }
         try {
             $request->validate([
                 'major_id' => 'required|array',
@@ -128,6 +143,7 @@ class DudiController extends Controller
 
     public function destroy($id)
     {
+        $this->authorize('admin');
         $dudi = Dudi::find($id);
         User::find($dudi->user_id)->delete();
         $dudi->delete();

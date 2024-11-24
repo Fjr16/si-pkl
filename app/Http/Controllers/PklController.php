@@ -8,6 +8,7 @@ use App\Models\Student;
 use App\Models\Teacher;
 use Exception;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class PklController extends Controller
 {
@@ -29,6 +30,12 @@ class PklController extends Controller
     public function index()
     {
         $data = PklData::all();
+        if (Auth::user()->role === 'DUDI') {
+            $data = PklData::where('dudi_id', Auth::user()->dudi->id)->get();
+        }
+        if (Auth::user()->role === 'Guru') {
+            $data = PklData::where('teacher_id', Auth::user()->teacher->id)->get();
+        }
         return view('data-pkl.index', [
             'title' => 'Data PKL Siswa',
             'data' => $data,
@@ -40,6 +47,7 @@ class PklController extends Controller
      */
     public function create()
     {
+        $this->authorize('admin');
         $data = Student::with('major')->whereDoesntHave('pklData')->get();
         $teachers = Teacher::all();
         return view('data-pkl.create', [
@@ -54,6 +62,7 @@ class PklController extends Controller
      */
     public function store(Request $request)
     {
+        $this->authorize('admin');
         $data = $request->validate([
             'student_id' => 'required|exists:students,id',
             'dudi_id' => 'required|exists:dudis,id',
@@ -84,6 +93,7 @@ class PklController extends Controller
      */
     public function edit(string $id)
     {
+        $this->authorize('admin');
         $data = Student::with('major')->get();
         $teachers = Teacher::all();
         $item = PklData::find($id);
@@ -105,6 +115,7 @@ class PklController extends Controller
      */
     public function update(Request $request, string $id)
     {
+        $this->authorize('admin');
         $item = PklData::find($id);
         $data = $request->validate([
             'student_id' => 'required|exists:students,id',
@@ -128,6 +139,7 @@ class PklController extends Controller
      */
     public function destroy(string $id)
     {
+        $this->authorize('admin');
         $item = PklData::find($id);
         $item->delete();
         return back()->with('success', 'Berhasil menghapus data');
@@ -139,6 +151,7 @@ class PklController extends Controller
      */
     public function getDataDudi(string $id)
     {
+        $this->authorize('admin');
         try {
             $data = Dudi::whereHas('majors', function ($major) use ($id) {
                 $major->where('major_id', $id);
