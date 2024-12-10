@@ -20,15 +20,6 @@ class LaporanAkhirController extends Controller
         return false;
     }
 
-    /**
-     * Display a listing of the resource.
-     */
-    public function index()
-    {
-        return view('laporan-akhir.index', [
-            'title' => 'Laporan Akhir',
-        ]);
-    }
 
     /**
      * Show the form for creating a new resource.
@@ -92,5 +83,14 @@ class LaporanAkhirController extends Controller
         } catch (ModelNotFoundException $mn){
             return back()->with('error', $mn->getMessage());
         }
+    }
+
+    public function show(String $id)
+    {
+        $item = LastReport::where('student_id', decrypt($id))->first() ?? null;
+        return view('laporan-akhir.create', [
+            'title' => 'Laporan Akhir',
+            'item' => $item,
+        ]);
     }
 }

@@ -37,7 +37,9 @@
                                     <th>Status</th>
                                     <th>Keterangan</th>
                                     <th>Foto</th>
+                                    @can('siswa')
                                     <th>Action</th>
+                                    @endcan
                                 </tr>
                             </thead>
                             <tbody>
@@ -55,6 +57,7 @@
                                                 <img src="{{ Storage::url($item->foto ?? '') }}" alt="" class="img-fluid" width="60" height="60">
                                             </a>
                                         </td>
+                                        @can('siswa')   
                                         <td>
                                             <div class="d-flex">
                                                 <a href="{{ route('absensi/siswa.edit', $item->id) }}"
@@ -68,6 +71,7 @@
                                                 </form>
                                             </div>
                                         </td>
+                                        @endcan
                                     </tr>
                                 @endforeach
                             </tbody>

@@ -52,7 +52,7 @@
                 <span>Data Siswa</span>
             </a>
         </li>
-        @endcanany()
+        @endcanany
             
         @can('admin')
         <li class="nav-item">
@@ -66,18 +66,20 @@
         <li class="nav-heading">Praktek Kerja Lapangan</li>
 
         <li class="nav-item">
-            <a class="nav-link {{ Request::is('absensi*') ? '' : 'collapsed' }}" href="{{ route('absensi/siswa.index') }}">
-                <i class="bi bi-calendar2-check"></i>
-                <span>Presensi Siswa</span>
-            </a>
-        </li>
-
-        <li class="nav-item">
             <a class="nav-link {{ Request::is('data/pkl*') ? '' : 'collapsed' }}" href="{{ route('data/pkl/siswa.index') }}">
                 <i class="bi bi-archive"></i>
                 <span>Data PKL</span>
             </a>
         </li>
+
+        @can('siswa')
+        <li class="nav-item">
+            <a class="nav-link {{ Request::is('absensi*') ? '' : 'collapsed' }}" href="{{ route('absensi/siswa.index') }}">
+                <i class="bi bi-calendar2-check"></i>
+                <span>Presensi Siswa</span>
+            </a>
+        </li>
+        @endcan
 
         @can('guru')
             <li class="nav-item">
@@ -88,19 +90,21 @@
             </li>
         @endcan
 
+        @can('siswa')
         <li class="nav-item">
             <a class="nav-link {{ Request::is('jurnal*') ? '' : 'collapsed' }}" href="{{ route('jurnal/harian.index') }}">
                 <i class="bi bi-journal-check"></i>
                 <span>Jurnal Harian</span>
             </a>
         </li>
-
         <li class="nav-item">
             <a class="nav-link {{ Request::is('laporan/akhir*') ? '' : 'collapsed' }}" href="{{ route('laporan/akhir.create') }}">
                 <i class="bi bi-journals"></i>
                 <span>Laporan Akhir</span>
             </a>
         </li>
+        @endcan
+
         @canany(['dudi', 'guru', 'siswa'])
             <li class="nav-item">
                 <a class="nav-link {{ Request::is('sertifikat*') ? '' : 'collapsed' }}" href="{{ route('sertifikat.index') }}">
