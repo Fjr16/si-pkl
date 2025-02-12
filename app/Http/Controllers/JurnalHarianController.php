@@ -97,6 +97,14 @@ class JurnalHarianController extends Controller
         ]);
     }
 
+    public function show(String $id) {
+        $data = DailyReport::where('student_id', decrypt($id))->get();
+        return view('jurnal-harian.index', [
+            'title' => 'Jurnal Harian',
+            'data' => $data,
+        ]);
+    }
+
     /**
      * Update the specified resource in storage.
      */

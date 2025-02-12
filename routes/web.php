@@ -79,6 +79,7 @@ Route::middleware('auth')->group(function () {
     Route::get('absensi/siswa', [AbsensiSiswaController::class, 'index'])->name('absensi/siswa.index');
     Route::get('absensi/siswa/create', [AbsensiSiswaController::class, 'create'])->name('absensi/siswa.create');
     Route::post('absensi/siswa/store', [AbsensiSiswaController::class, 'store'])->name('absensi/siswa.store');
+    Route::get('absensi/siswa/show/{id}', [AbsensiSiswaController::class, 'show'])->name('absensi/siswa.show');
     Route::get('absensi/siswa/edit/{id}', [AbsensiSiswaController::class, 'edit'])->name('absensi/siswa.edit');
     Route::put('absensi/siswa/update/{id}', [AbsensiSiswaController::class, 'update'])->name('absensi/siswa.update');
     Route::delete('absensi/siswa/destroy/{id}', [AbsensiSiswaController::class, 'destroy'])->name('absensi/siswa.destroy');
@@ -88,13 +89,14 @@ Route::middleware('auth')->group(function () {
     Route::get('jurnal/harian/create', [JurnalHarianController::class, 'create'])->name('jurnal/harian.create');
     Route::post('jurnal/harian/store', [JurnalHarianController::class, 'store'])->name('jurnal/harian.store');
     Route::get('jurnal/harian/edit/{id}', [JurnalHarianController::class, 'edit'])->name('jurnal/harian.edit');
+    Route::get('jurnal/harian/show/{id}', [JurnalHarianController::class, 'show'])->name('jurnal/harian.show');
     Route::put('jurnal/harian/update/{id}', [JurnalHarianController::class, 'update'])->name('jurnal/harian.update');
     Route::delete('jurnal/harian/destroy/{id}', [JurnalHarianController::class, 'destroy'])->name('jurnal/harian.destroy');
     Route::get('jurnal/harian/download/{id}', [JurnalHarianController::class, 'download'])->name('jurnal/harian.download');
 
     // Laporan Akhir
-    Route::get('laporan/akhir', [LaporanAkhirController::class, 'index'])->name('laporan/akhir.index');
     Route::get('laporan/akhir/create', [LaporanAkhirController::class, 'create'])->name('laporan/akhir.create');
+    Route::get('laporan/akhir/show/{id}', [LaporanAkhirController::class, 'show'])->name('laporan/akhir.show');
     Route::post('laporan/akhir/store', [LaporanAkhirController::class, 'store'])->name('laporan/akhir.store');
     Route::get('laporan/akhir/download/{id}', [LaporanAkhirController::class, 'download'])->name('laporan/akhir.download');
 

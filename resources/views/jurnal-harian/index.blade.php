@@ -35,7 +35,9 @@
                                     <th>Jenis Laporan</th>
                                     <th>Keterangan</th>
                                     <th>Laporan</th>
+                                    @can('siswa')
                                     <th>Action</th>
+                                    @endcan
                                 </tr>
                             </thead>
                             <tbody>
@@ -51,6 +53,7 @@
                                                 {{ ($item->file_name ?? '-') . ' (' . ($item->file_size ?? '-') . ' MB)' }}
                                             </a>
                                         </td>
+                                        @can('siswa')
                                         <td>
                                             <div class="d-flex">
                                                 <a href="{{ route('jurnal/harian.edit', $item->id) }}"
@@ -64,6 +67,7 @@
                                                 </form>
                                             </div>
                                         </td>
+                                        @endcan
                                     </tr>
                                 @endforeach
                             </tbody>

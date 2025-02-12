@@ -38,6 +38,11 @@
                                     @can('admin')
                                     <th>Action</th>
                                     @endcan
+                                    @canany(['dudi', 'guru'])
+                                    <th>Presensi</th> 
+                                    <th>Jurnal Harian</th> 
+                                    <th>Laporan Akhir</th> 
+                                    @endcanany
                                 </tr>
                             </thead>
                             <tbody>
@@ -62,6 +67,11 @@
                                                 </form>
                                             </td>
                                         @endcan
+                                        @canany(['dudi', 'guru'])
+                                        <td><a class="btn btn-icon btn-primary" href="{{ route('absensi/siswa.show', encrypt($item->student->id)) }}"><i class="bx bx-detail"></i></a></td>
+                                        <td><a class="btn btn-icon btn-primary" href="{{ route('jurnal/harian.show', encrypt($item->student->id)) }}"><i class="bx bx-detail"></i></a></td>
+                                        <td><a class="btn btn-icon btn-primary" href="{{ route('laporan/akhir.show', encrypt($item->student->id)) }}"><i class="bx bx-detail"></i></a></td>
+                                        @endcanany
                                     </tr>
                                 @endforeach
                             </tbody>

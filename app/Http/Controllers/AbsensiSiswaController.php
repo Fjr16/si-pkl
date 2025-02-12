@@ -79,7 +79,11 @@ class AbsensiSiswaController extends Controller
      */
     public function show(string $id)
     {
-        //
+        $data = AttendanceList::where('student_id', decrypt($id))->latest()->get();
+        return view('absensi.index', [
+            'title' => 'Presensi Siswa',
+            'data' => $data,
+        ]);
     }
 
     /**

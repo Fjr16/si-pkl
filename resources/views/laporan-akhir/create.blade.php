@@ -46,56 +46,64 @@
                             </table>
                         </div>
                     </div>
-                    {{-- update laporan --}}
-                    <div class="card">
-                        <div class="card-body">
-                            <div class="d-flex align-items-center">
-                                <h5 class="card-title">{{ $title ?? '' }}</h5>
+                    @can('siswa')
+                        {{-- update laporan --}}
+                        <div class="card">
+                            <div class="card-body">
+                                <div class="d-flex align-items-center">
+                                    <h5 class="card-title">{{ $title ?? '' }}</h5>
+                                </div>
+
+                                <form method="POST" action="{{ route('laporan/akhir.store') }}" enctype="multipart/form-data">
+                                    @csrf
+                                    <div class="mb-3">
+                                        <label for="tanggal" class="form-label">Tanggal</label>
+                                        <input type="date" value="{{ date('Y-m-d') }}" class="form-control" name="tanggal" required>
+                                    </div>
+                                    <div class="mb-3">
+                                        <label for="laporan-akhir" class="form-label">File Laporan (PDF) (Max: 5 MB)</label>
+                                        <input type="file" class="form-control" name="laporan_akhir" accept="application/pdf" required>
+                                    </div>
+                                    <div class="mb-3">
+                                        <button type="submit" class="btn btn-sm btn-primary">Perbarui</button>
+                                    </div>
+
+                                </form>
+
                             </div>
-
-                            <form method="POST" action="{{ route('laporan/akhir.store') }}" enctype="multipart/form-data">
-                                @csrf
-                                <div class="mb-3">
-                                    <label for="tanggal" class="form-label">Tanggal</label>
-                                    <input type="date" value="{{ date('Y-m-d') }}" class="form-control" name="tanggal" required>
-                                </div>
-                                <div class="mb-3">
-                                    <label for="laporan-akhir" class="form-label">File Laporan (PDF) (Max: 5 MB)</label>
-                                    <input type="file" class="form-control" name="laporan_akhir" accept="application/pdf" required>
-                                </div>
-                                <div class="mb-3">
-                                    <button type="submit" class="btn btn-sm btn-primary">Perbarui</button>
-                                </div>
-
-                            </form>
-
                         </div>
-                    </div>
+                    @endcan
                 @else
-                    <div class="card">
-                        <div class="card-body">
-                            <div class="d-flex align-items-center">
-                                <h5 class="card-title">{{ $title ?? '' }}</h5>
+                    @can('siswa')
+                        <div class="card">
+                            <div class="card-body">
+                                <div class="d-flex align-items-center">
+                                    <h5 class="card-title">{{ $title ?? '' }}</h5>
+                                </div>
+
+                                <form method="POST" action="{{ route('laporan/akhir.store') }}" enctype="multipart/form-data">
+                                    @csrf
+                                    <div class="mb-3">
+                                        <label for="tanggal" class="form-label">Tanggal</label>
+                                        <input type="date" value="{{ date('Y-m-d') }}" class="form-control" name="tanggal" required>
+                                    </div>
+                                    <div class="mb-3">
+                                        <label for="laporan-akhir" class="form-label">File Laporan (PDF) (Max: 5 MB)</label>
+                                        <input type="file" class="form-control" name="laporan_akhir" accept="application/pdf" required>
+                                    </div>
+                                    <div class="mb-3">
+                                        <button type="submit" class="btn btn-sm btn-primary">Simpan</button>
+                                    </div>
+
+                                </form>
+
                             </div>
-
-                            <form method="POST" action="{{ route('laporan/akhir.store') }}" enctype="multipart/form-data">
-                                @csrf
-                                <div class="mb-3">
-                                    <label for="tanggal" class="form-label">Tanggal</label>
-                                    <input type="date" value="{{ date('Y-m-d') }}" class="form-control" name="tanggal" required>
-                                </div>
-                                <div class="mb-3">
-                                    <label for="laporan-akhir" class="form-label">File Laporan (PDF) (Max: 5 MB)</label>
-                                    <input type="file" class="form-control" name="laporan_akhir" accept="application/pdf" required>
-                                </div>
-                                <div class="mb-3">
-                                    <button type="submit" class="btn btn-sm btn-primary">Simpan</button>
-                                </div>
-
-                            </form>
-
                         </div>
+                    @else
+                    <div class="bg-primary">
+                        <div class="p-3 fw-bold text-white text-center text-uppercase">Data Tidak Ditemukan</div>
                     </div>
+                    @endcan
                 @endif
 
             </div>

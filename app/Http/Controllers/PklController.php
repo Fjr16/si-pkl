@@ -30,6 +30,9 @@ class PklController extends Controller
     public function index()
     {
         $data = PklData::all();
+        if (Auth::user()->role === 'Siswa') {
+            $data = PklData::where('student_id', Auth::user()->student->id)->get();
+        }
         if (Auth::user()->role === 'DUDI') {
             $data = PklData::where('dudi_id', Auth::user()->dudi->id)->get();
         }
