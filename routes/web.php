@@ -3,6 +3,7 @@
 use App\Http\Controllers\AbsensiSiswaController;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\DashboardController;
+use App\Http\Controllers\DocumentController;
 use App\Http\Controllers\DudiController;
 use App\Http\Controllers\JurnalHarianController;
 use App\Http\Controllers\LaporanAkhirController;
@@ -122,4 +123,11 @@ Route::middleware('auth')->group(function () {
     Route::get('sertifikat/download/{id}', [SertifikatController::class, 'download'])->name('sertifikat.download');
     Route::get('sertifikat/signature/add/{id}', [SertifikatController::class, 'signatureAdd'])->name('sertifikat/signature.add')->middleware('guru');
     Route::post('sertifikat/signature/store/{id}', [SertifikatController::class, 'signatureStore'])->name('sertifikat/signature.store')->middleware('guru');
+
+    // other dokumen
+    Route::get('dokumen', [DocumentController::class, 'index'])->name('dokumen.index');
+    Route::get('dokumen/create', [DocumentController::class, 'create'])->name('dokumen.create')->middleware('guru');
+    Route::post('dokumen/store', [DocumentController::class, 'store'])->name('dokumen.store')->middleware('guru');
+    Route::get('dokumen/download/{id}', [DocumentController::class, 'download'])->name('dokumen.download');
+    Route::delete('dokumen/destroy/{id}', [DocumentController::class, 'destroy'])->name('dokumen.destroy')->middleware('guru');
 });

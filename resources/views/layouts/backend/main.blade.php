@@ -64,6 +64,10 @@
             <div class="alert alert-danger" role="alert">
                 {{ session('error') }}
             </div>
+        @elseif(session()->has('success'))
+            <div class="alert alert-success" role="alert">
+                {{ session('success') }}
+            </div>
         @endif
 
         <!-- Content -->

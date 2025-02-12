@@ -109,6 +109,15 @@
                 </a>
             </li>
         @endcanany
+
+        <li class="nav-heading">Lainnya </li>
+        <li class="nav-item">
+            <a class="nav-link {{ Request::is('dokumen*') ? '' : 'collapsed' }}" href="{{ route('dokumen.index') }}">
+                <i class="bi bi-file-earmark-pdf-fill"></i>
+                <span>Dokumen</span>
+            </a>
+        </li>
+
     </ul>
 
 </aside>

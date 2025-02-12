@@ -1,0 +1,36 @@
+1. DATA PKL
+	Yang berisi data siswa dan tempat dan perusahaan tempat siswa melakukan PKL. pada from Creat saat memilih data perusahaan atau Dudi, data perusaan yang ditampilkan berdasarkan jurusan siswa. misalnya, jurusan TKJ menampilkan select data perusahaan bidang TKJ. di inputkan oleh admin (DONE)
+
+2. MONITORING
+	Di inputkan oleh guru atau pembimbing yang berisi data laporan kunjungan pembimbing tentang siswa di tempat PKL.  (DONE)
+
+3. JURNAL HARIAN
+	Di inputkan oleh siswa yang merupakan data laporan harian siswa tentang Kegiatan PKL. misalnya, hari senin tgl..	
+siswa A menginputkan laporan Kegiatan di perusahaan PKL pada hari tersebut. (DONE)
+
+4. ABSEN 
+	Di inputkan oleh siswa yang merupakan presensi harian siswa. diambil setiap hari dan tidak memiliki batas waktu. namun, mencantumkan waktu pengambilan.
+- menambahkan fitur upload foto pada saat absensi (DONE)
+
+	
+5. SERTIFIKAT
+	Di upload oleh Dudi atau perusahaan, di edit ( di TTD) digital oleh guru atau pembimbing dan di download atau dicetak oleh siswa
+
+6. LAPORAN AKHIR
+	Di inputkan oleh siswa yang merupakan data laporan akhir siswa selama Kegiatan PKL. berisi tgl upload  ,tempat upload file. (DONE)
+
+7. tambahkan nis pada siswa (DONE)
+8. Setiap dudi atau perusahaan memiliki kriteria jurusan yang diterima (DONE)
+9. tambahkan background login (DONE)
+10. Buat Relasi Antara jurusan dan perusahaan (DONE)
+11. membuat autorisasi gate dan middleware (DONE)
+
+revisi perbaikan:
+# tabel yang keluar dari card pada data dudi (DONE)
+# foto yang di upload siswa tidak muncul jika di klik muncul error (jalankan php artisan storage:link)
+# sesuaikan lokasi ttd validasi pada sertifikat, sesuai dengan template sertifikat dari mutia
+
+revisi tambahan:
+* pada dashboard masing-masing user tambahkan data agar tampilan tidak polos, mis: identitas sekolah, data siswa bimmbingan
+* pada user guru tambah upload panduan jurnal harian dan laporan akhir. (sediakan satu form upload lagi untuk panduan jurnal harian dan laporan akhir yang nanti bisa didownload oleh siswa)
+* data guru , siswa, dan dudi buatkan create from upload excel
