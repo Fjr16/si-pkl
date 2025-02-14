@@ -14,6 +14,7 @@ use App\Http\Controllers\SertifikatController;
 use App\Http\Controllers\StudentController;
 use App\Http\Controllers\TeacherController;
 use App\Http\Controllers\UserController;
+use Illuminate\Support\Facades\Artisan;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', function () {
@@ -50,6 +51,7 @@ Route::middleware('auth')->group(function () {
     Route::get('guru/edit/{id}', [TeacherController::class, 'edit'])->name('guru.edit');
     Route::put('guru/update/{id}', [TeacherController::class, 'update'])->name('guru.update');
     Route::delete('guru/destroy/{id}', [TeacherController::class, 'destroy'])->name('guru.destroy')->middleware('admin');
+    Route::post('guru/import', [TeacherController::class, 'import'])->name('guru.import')->middleware('admin');
 
     // Data DUDI
     Route::get('dudi', [DudiController::class, 'index'])->name('dudi.index');
@@ -132,4 +134,9 @@ Route::middleware('auth')->group(function () {
     Route::post('dokumen/store', [DocumentController::class, 'store'])->name('dokumen.store')->middleware('guru');
     Route::get('dokumen/download/{id}', [DocumentController::class, 'download'])->name('dokumen.download');
     Route::delete('dokumen/destroy/{id}', [DocumentController::class, 'destroy'])->name('dokumen.destroy')->middleware('guru');
+
+    Route::get('storagelink', function(){
+        Artisan::call('storage:link');
+        return back()->with('success', 'Berhasil');
+    });
 });

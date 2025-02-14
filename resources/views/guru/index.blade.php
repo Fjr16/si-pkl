@@ -20,10 +20,16 @@
                     <div class="card-body">
                         <div class="d-flex align-items-center">
                             <h5 class="card-title">{{ $title ?? '' }}</h5>
-                            @can('admin')
-                                <a href="{{ route('guru.create') }}" class="btn btn-sm btn-primary ms-auto"><i
-                                        class="bi bi-plus-lg"></i> Tambah Guru</a>
-                            @endcan
+                            <div class="ms-auto">
+                                <button type="button" class="btn btn-sm btn-secondary" data-bs-toggle="modal" data-bs-target="#uploadExcel">
+                                    <i class="bi bi-upload"></i>
+                                    Excel
+                                </button>
+                                @can('admin')
+                                    <a href="{{ route('guru.create') }}" class="btn btn-sm btn-primary"><i
+                                            class="bi bi-plus-lg"></i> Tambah Guru</a>
+                                @endcan
+                            </div>
                         </div>
 
                         <table class="table datatable">
@@ -67,8 +73,32 @@
 
                     </div>
                 </div>
-
             </div>
         </div>
     </section>
-@endsection
+
+    <!-- Modal -->
+    <div class="modal fade" id="uploadExcel" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <form action="{{ route('guru.import') }}" method="POST" enctype="multipart/form-data">
+                @csrf
+                    <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">Modal title</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+
+                        <div class="col">
+                            <label for="teacher_excel" class="form-label">Upload File Excel</label>
+                            <input type="file" name="teacher_excel" id="teacher_excel" class="form-control" @required(true)>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="submit" class="btn btn-primary">Upload</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+    @endsection
