@@ -33,4 +33,4 @@ revisi perbaikan:
 revisi tambahan:
 * pada dashboard masing-masing user tambahkan data agar tampilan tidak polos, mis: identitas sekolah, data siswa bimmbingan
 * pada user guru tambah upload panduan jurnal harian dan laporan akhir. (sediakan satu form upload lagi untuk panduan jurnal harian dan laporan akhir yang nanti bisa didownload oleh siswa) (DONE)
-* data guru , siswa, dan dudi buatkan create from upload excel
+* data guru , siswa, dan dudi buatkan create from upload excel (DONE)

@@ -24,7 +24,7 @@
                         <form action="{{ route('sertifikat/signature.store', $item->id) }}" method="POST">
                             @csrf
                             <input type="hidden" class="form-control" name="signature" id="dataImage"></input>
-                            <canvas id="signatureCanvas" width="500" height="200" style="border: 1px solid black;"></canvas>
+                            <canvas id="signatureCanvas" width="250" height="200" style="border: 1px solid black;"></canvas>
                             <div class="">
                                 <button type="button" id="clearSignature" class="btn btn-sm btn-danger">Clear</button>
                                 <button type="submit" id="saveSignature" class="btn btn-sm btn-primary">Save</button>

@@ -45,9 +45,11 @@
                                             @if ($item->certificate)
                                             <div class="d-flex">
                                                 <a href="{{ route('sertifikat.download', $item->certificate->id) }}" class="btn btn-sm btn-primary me-1"><i class="bi bi-download"></i> Unduh</a>
+                                                @can('guru')
                                                 @if ($item->certificate->status === 'pending')
                                                     <a href="{{ route('sertifikat/signature.add', $item->certificate->id) }}" class="btn btn-sm btn-success"><i class="bi bi-vector-pen"></i> Validasi</a>
                                                 @endif
+                                                @endcan
                                             </div>
                                             @else
                                                 <a href="{{ route('sertifikat.create', $item->id) }}" class="btn btn-sm btn-primary">Upload</a>

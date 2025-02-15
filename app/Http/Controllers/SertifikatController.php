@@ -142,14 +142,14 @@ class SertifikatController extends Controller
                 $pageHeight = $pdf->GetPageHeight();
 
                 // p dan l tanda tangan
-                $signatureWidth = 60;
+                $signatureWidth = 40;
                 $signatureHeight = 40;
 
                 // Periksa orientasi dokumen
                 if ($pageWidth > $pageHeight) {
                     // Jika orientasi landscape
-                    $x = ($pageWidth - $signatureWidth) / 4;
-                    $y = $pageHeight - $signatureHeight - 40; // Jarak 10 mm dari tepi bawah
+                    $x = ($pageWidth - $signatureWidth) / 6;
+                    $y = $pageHeight - $signatureHeight - 25;
                 } else {
                     // Jika orientasi portrait
                     $x = $pageWidth - $signatureWidth - 10; // Jarak 10 mm dari tepi kanan
