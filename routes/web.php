@@ -60,6 +60,7 @@ Route::middleware('auth')->group(function () {
     Route::get('dudi/edit/{id}', [DudiController::class, 'edit'])->name('dudi.edit');
     Route::put('dudi/update/{id}', [DudiController::class, 'update'])->name('dudi.update');
     Route::delete('dudi/destroy/{id}', [DudiController::class, 'destroy'])->name('dudi.destroy');
+    Route::post('dudi/import', [DudiController::class, 'import'])->name('dudi.import');
 
     // Data Siswa
     Route::get('siswa', [StudentController::class, 'index'])->name('siswa.index');

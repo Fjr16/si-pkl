@@ -3,11 +3,13 @@
 namespace App\Http\Controllers;
 
 use App\Models\Dudi;
-use App\Models\Major;
 use App\Models\User;
+use App\Models\Major;
+use App\Imports\DudiImport;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
+use Maatwebsite\Excel\Facades\Excel;
 use Illuminate\Validation\ValidationException;
 
 class DudiController extends Controller
@@ -149,5 +151,25 @@ class DudiController extends Controller
         $dudi->delete();
 
         return redirect()->route('dudi.index');
+    }
+
+    public function import(Request $request){
+        try {
+            $file = $request->file('dudi_excel');
+    
+            if ($file) {
+              $coba = Excel::import(new DudiImport, $file);
+            }else{
+                return back()->with('error', 'File Tidak Ditemukan');
+            }
+    
+            return redirect()->route('dudi.index')->with('success', 'Berhasil Di import');
+        } catch (Exception $e) {
+            return back()->with('error', $e->getMessage());
+        } catch (ModelNotFoundException $mn) {
+            return back()->with('error', $mn->getMessage());
+        } catch (ValidationException $ve) {
+            return back()->with('error', $ve->getMessage());
+        }
     }
 }

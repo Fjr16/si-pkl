@@ -29,7 +29,10 @@
                         <table class="table datatable">
                             <thead>
                                 <tr>
-                                    <th>No</th>
+                                    {{-- <th>No</th> --}}
+                                    @can('admin')
+                                    <th>Id</th>
+                                    @endcan
                                     <th>Kode</th>
                                     <th>Nama Jurusan</th>
                                     <th>Action</th>
@@ -38,7 +41,10 @@
                             <tbody>
                                 @foreach ($data as $item)
                                     <tr>
-                                        <td>{{ $loop->iteration }}</td>
+                                        {{-- <td>{{ $loop->iteration }}</td> --}}
+                                        @can('admin')                                            
+                                        <td>{{ $item->id ?? '' }}</td>
+                                        @endcan
                                         <td>{{ $item->kode ?? '' }}</td>
                                         <td>{{ $item->nama ?? '' }}</td>
                                         <td class="d-flex">
