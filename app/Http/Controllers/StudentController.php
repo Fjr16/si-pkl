@@ -2,12 +2,17 @@
 
 namespace App\Http\Controllers;
 
+use App\Imports\StudentImport;
 use App\Models\Major;
 use App\Models\Student;
 use App\Models\User;
+use Exception;
+use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Validation\ValidationException;
+use Maatwebsite\Excel\Facades\Excel;
 
 class StudentController extends Controller
 {
@@ -123,5 +128,24 @@ class StudentController extends Controller
         $siswa->delete();
 
         return redirect()->route('siswa.index');
+    }
+
+    public function import(Request $request){
+        try {
+            $file = $request->file('student_excel');
+            if (!$file) {
+                return back()->with('error', 'File tidak ditemukan'); 
+            }
+
+            Excel::import(new StudentImport, $file);
+
+            return redirect()->route('siswa.index')->with('success', 'Berhasil Di Import');
+        } catch (Exception $e) {
+            return back()->with('error', $e->getMessage());
+        } catch (ModelNotFoundException $mn) {
+            return back()->with('error', $mn->getMessage());
+        } catch (ValidationException $ve) {
+            return back()->with('error', $ve->getMessage());
+        }
     }
 }

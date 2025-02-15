@@ -69,6 +69,7 @@ Route::middleware('auth')->group(function () {
     Route::get('siswa/edit/{id}', [StudentController::class, 'edit'])->name('siswa.edit');
     Route::put('siswa/update/{id}', [StudentController::class, 'update'])->name('siswa.update');
     Route::delete('siswa/destroy/{id}', [StudentController::class, 'destroy'])->name('siswa.destroy');
+    Route::post('siswa/import', [StudentController::class, 'import'])->name('siswa.import');
 
     // Data Jurusan
     Route::get('jurusan', [MajorController::class, 'index'])->name('jurusan.index');

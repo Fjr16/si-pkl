@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use Exception;
 use App\Models\Dudi;
 use App\Models\User;
 use App\Models\Major;
@@ -11,6 +12,7 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use Maatwebsite\Excel\Facades\Excel;
 use Illuminate\Validation\ValidationException;
+use Illuminate\Database\Eloquent\ModelNotFoundException;
 
 class DudiController extends Controller
 {
@@ -158,7 +160,7 @@ class DudiController extends Controller
             $file = $request->file('dudi_excel');
     
             if ($file) {
-              $coba = Excel::import(new DudiImport, $file);
+              Excel::import(new DudiImport, $file);
             }else{
                 return back()->with('error', 'File Tidak Ditemukan');
             }
