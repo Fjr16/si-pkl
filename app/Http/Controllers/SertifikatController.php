@@ -133,7 +133,31 @@ class SertifikatController extends Controller
             // tambahkan halaman dengan ukuran asli
             $pdf->AddPage($size);
             $pdf->useTemplate($templateId);
-    
+
+            // Tambahkan tanda tangan di halaman pertama
+            if ($i === 1) {
+                // ambil dimensi halaman
+                $pageWidth = $pdf->GetPageWidth();
+                $pageHeight = $pdf->GetPageHeight();
+
+                // p dan l tanda tangan
+                $signatureWidth = 40;
+                $signatureHeight = 40;
+
+                // Periksa orientasi dokumen
+                if ($pageWidth > $pageHeight) {
+                    // Jika orientasi landscape
+                    $x = $pageWidth - 97;
+                    $y = $pageHeight - $signatureHeight - 25;
+                } else {
+                    // Jika orientasi portrait
+                    $x = $pageWidth - $signatureWidth - 10; // Jarak 10 mm dari tepi kanan
+                    $y = $pageHeight - $signatureHeight - 10; // Jarak 10 mm dari tepi bawah
+                }
+
+                $pdf->Image($signaturePathPublic, $x, $y, $signatureWidth, $signatureHeight);
+            }
+
             // Tambahkan tanda tangan di halaman terakhir
             if ($i === $pageCount) {
 
@@ -148,7 +172,7 @@ class SertifikatController extends Controller
                 // Periksa orientasi dokumen
                 if ($pageWidth > $pageHeight) {
                     // Jika orientasi landscape
-                    $x = ($pageWidth - $signatureWidth) / 6;
+                    $x = ($pageWidth - $signatureWidth) / 7;
                     $y = $pageHeight - $signatureHeight - 25;
                 } else {
                     // Jika orientasi portrait
